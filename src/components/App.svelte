@@ -1,6 +1,9 @@
 <script>
-  import { navigate } from "svelte-routing";
+  import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
 </script>
+
+
 <main>
     <h1 style="text-align: center;">About MBTI Test</h1>
     <p style="text-align: center;">The full name of MBTI is Myers-Briggs Type Indicator,
@@ -24,9 +27,8 @@
         <a href="https://www.16personalities.com/free-personality-test" target="_blank" rel="noopener noreferrer">
             <button>Test</button>
           </a>
-          <a href="/16picture">
-            <button>Learn more</button>
-          </a>
+            <button on:click={() => goto(`${base}/16picture`)}>Learn more</button>
+          
       </div>
     <p>source 1: https://www.themyersbriggs.com/en-US/Products-and-Services/Myers-Briggs
     </p>

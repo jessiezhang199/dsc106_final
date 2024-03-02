@@ -1,9 +1,9 @@
 <script>
-    
-</script>
+    import { goto } from '$app/navigation';
+    import { base } from '$app/paths';
+  </script>
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     
-      <a href="/vis">
-        <button>Learn more</button>
-      </a>
+    <button on:click={() => goto(`${base}/vis`)}>Learn more</button>
+    
   </div>
