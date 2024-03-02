@@ -1,13 +1,17 @@
+
 <script>
-  // Write your JS here, or import other files
+  import { Router, Route } from "svelte-routing";
+
+  import HomePage from "./Home.svelte";
+  import YesPage from "./Yespage.svelte";
+  import NoPage from "./Nopage.svelte";
+  import Graph from "./Global.svelte";
+
 </script>
+<HomePage />
+<Router>
+<Route path="/yes" component={YesPage} />
+<Route path="/no" component={NoPage} />
+<!-- <Route path="/home" component={HomePage} /> -->
+</Router>
 
-<main>
-  <h1>Svelte template</h1>
-
-  <p>Write your HTML here</p>
-</main>
-
-<style>
-  /* Write your CSS here */
-</style>
