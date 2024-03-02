@@ -16,7 +16,7 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			base: 'localhost' ? '' : '/dsc106_final'
+			base: 'localhost' ? '' : '/dsc106_final' ? '' :'/jessiezhang199.github.io'
 		}
 	}
 };
