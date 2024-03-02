@@ -253,7 +253,9 @@
   {#if CountrySuggestions.length > 0}
   <ul class="autocomplete-suggestions">
     {#each CountrySuggestions as suggestion}
-      <li on:click={() => selectCountry(suggestion)} role="button" tabindex="0">{suggestion}</li>
+      <li>
+        <button on:click={() => selectCountry(suggestion)}>{suggestion}</button>
+      </li>
     {/each}
   </ul>
   {/if}
