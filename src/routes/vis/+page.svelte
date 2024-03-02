@@ -251,11 +251,11 @@
 <button on:click={searchData}>Search</button>
   <button on:click={resetSearch}>Reset</button> <!-- Add this line for the Reset button -->
   {#if CountrySuggestions.length > 0}
-    <ul class="autocomplete-suggestions">
-      {#each CountrySuggestions as suggestion}
-        <li on:click={() => selectCountry(suggestion)}>{suggestion}</li>
-      {/each}
-    </ul>
+  <ul class="autocomplete-suggestions">
+    {#each CountrySuggestions as suggestion}
+      <li on:click={() => selectCountry(suggestion)} role="button" tabindex="0">{suggestion}</li>
+    {/each}
+  </ul>
   {/if}
 </div>
 <!-- Search results are now directly under the search bar -->
