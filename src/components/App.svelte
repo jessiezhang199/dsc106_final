@@ -24,7 +24,6 @@
         <a href="https://www.16personalities.com/free-personality-test" target="_blank" rel="noopener noreferrer">
             <button>Test</button>
           </a>
-        
           <a href="/16picture">
             <button>Learn more</button>
           </a>
