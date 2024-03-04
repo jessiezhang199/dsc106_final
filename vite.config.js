@@ -4,7 +4,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { resolve } from 'path';
 
 export default {
-  base: '/jessiezhang199/',
+  base: '/dsc106_final/',
   plugins: [sveltekit()],
   resolve: {
     alias: {
