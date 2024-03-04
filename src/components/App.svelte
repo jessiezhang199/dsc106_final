@@ -4,11 +4,11 @@
 </script>
 
 <nav>
-  <a href="/home">Introduction to MBTI</a >
-  <a href="/16picture">MBTI Types</a >
-  <a href="/vis">Country Distribution</a >
-  <a href="/quiz">Fun Quiz</a >
- </nav>
+  <a href="#" on:click|preventDefault={() => goto(`${base}/home`)}>Introduction to MBTI</a>
+  <a href="#" on:click|preventDefault={() => goto(`${base}/16picture`)}>MBTI Types</a>
+  <a href="#" on:click|preventDefault={() => goto(`${base}/vis`)}>Country Distribution</a>
+  <a href="#" on:click|preventDefault={() => goto(`${base}/quiz`)}>Fun Quiz</a>
+</nav>
 
 <main>
     <h1 style="text-align: center;">What is MBTI Test?</h1>
