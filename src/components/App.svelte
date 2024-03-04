@@ -35,7 +35,7 @@
           </a>
             <button on:click={() => goto(`${base}/16picture`)}>Learn more</button>
           
-      </div>
+    </div>
     <p>source 1: https://www.themyersbriggs.com/en-US/Products-and-Services/Myers-Briggs
     </p>
     <p>source 2: https://www.verywellmind.com/the-myers-briggs-type-indicator-2795583 

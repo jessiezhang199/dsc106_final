@@ -16,8 +16,8 @@
   let allCountries = []; // This will be populated with unique Country names
   
   const mbtiColors = d3.scaleOrdinal()
-  .domain(["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"])
-  .range(["#FFDCAC", "#5F492A", "#99B658", "#90E45E", "#B3E0AE", "#2BB17F", "#27CABD", "#147EA3", "#0D3C94", "#1E1285", '#672595', '#A97CB8', '#D7AFD9', '#E54E3B', '#7B6865', '#DD7929']);
+  .domain(["INTJ", "ESTP", "ENTJ", "ESFJ", "INFJ", "INFP", "ENFJ", "ISFJ", "ISTJ", "ENFP", "ENTP", "ESTJ", "ISTP", "ISFP", "INTP", "ESFP"])
+  .range(["#99B658", "#90E45E", "#B3E0AE", "#2BB17F", "#27CABD", "#147EA3", "#0D3C94", "#1E1285", '#672595', '#A97CB8', '#D7AFD9', '#E54E3B', '#DD7929', '#7B6865', "#FFDCAC", "#5F492A"]);
 
   const renameMap = {
       // Example: 'CSV Name': 'GeoJSON Name',
@@ -225,8 +225,8 @@
   }
   .legend-container {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top:200px;
+    right: 100px;
     display: flex;
     flex-direction: column;
   }
@@ -238,7 +238,7 @@
   }
 
   .legend-item svg {
-    margin-right: 5px;
+    margin-right: 10px;
   }
 
   .legend-item span {
@@ -248,7 +248,11 @@
 
 <h1>Which MBTI Type is Most Common in Your Country?</h1>
 <p style="position: absolute; top: 250px; left: 20px; font-size: 16px; max-width: 150px;">
-  In many countries, INFP types account for the majority.
+  In many countries, INFP types count for the majority.
+</p>
+
+<p style="position: absolute; top: 400px; left: 20px; font-size: 16px; max-width: 150px;">
+  According to our data, there is accually only 5 MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ)
 </p>
 
 <div class="search-container">
@@ -293,9 +297,7 @@
     <span>No Data</span>
   </div>
 </div>
-<p style="position: fixed; top: 550px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full</a></p>
-<div style="display: flex; justify-content: center; margin-top: 20px;">
-    
+<p style="position: absolute; top: 700px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full</a></p>
+<div style="position: absolute; top: 720px; left: 20px;">
   <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
-  
 </div>
