@@ -161,13 +161,6 @@
   }
 </script>
 
-<nav>
-  <a href="/home">Introduction to MBTI</a >
-  <a href="/16picture">MBTI Types</a >
-  <a href="/vis">Country Distribution</a >
-  <a href="/quiz">Fun Quiz</a >
- </nav>
-
 <style>
   h1 {
   text-align: center; /* Centers the title text */
