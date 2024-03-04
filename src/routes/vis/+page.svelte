@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
   import { geoNaturalEarth1, geoPath } from 'd3-geo';
+  import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
 
   let mbtiData = [], mapData;
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -285,4 +287,8 @@
   </div>
 </div>
 <p style="position: fixed; top: 550px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full</a></p>
-
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    
+  <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
+  
+</div>
