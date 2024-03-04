@@ -1,6 +1,13 @@
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
 
-export default defineConfig({
-	plugins: [sveltekit()]
-});
+
+import { sveltekit } from '@sveltejs/kit/vite';
+import { resolve } from 'path';
+
+export default {
+  plugins: [sveltekit()],
+  resolve: {
+    alias: {
+      components: resolve(__dirname, './src/components')
+    }
+  }
+};

@@ -3,6 +3,12 @@
   import { base } from '$app/paths';
 </script>
 
+<nav>
+  <a href="/home">Introduction to MBTI</a >
+  <a href="/16picture">MBTI Types</a >
+  <a href="/vis">Country Distribution</a >
+  <a href="/quiz">Fun Quiz</a >
+ </nav>
 
 <main>
     <h1 style="text-align: center;">About MBTI Test</h1>
