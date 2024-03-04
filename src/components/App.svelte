@@ -11,7 +11,7 @@
  </nav>
 
 <main>
-    <h1 style="text-align: center;">About MBTI Test</h1>
+    <h1 style="text-align: center;">What is MBTI Test?</h1>
     <p style="text-align: center;">The full name of MBTI is Myers-Briggs Type Indicator,
         which is the world's most popular personality tools.
         it have more than 70 years of science-based and 
@@ -33,12 +33,13 @@
         <a href="https://www.16personalities.com/free-personality-test" target="_blank" rel="noopener noreferrer">
             <button>Test</button>
           </a>
-            <button on:click={() => goto(`${base}/16picture`)}>Learn more</button>
-          
+            <button on:click={() => goto(`${base}/16picture`)}>Learn more</button>   
     </div>
-    <p>source 1: https://www.themyersbriggs.com/en-US/Products-and-Services/Myers-Briggs
+
+    <p style="position: absolute; top: 730px; right: 20px;">
+      Research Source: <a href="https://www.jstor.org/stable/26554264" target="_blank">Validity and Reliability of the Myers-Briggs Personality Type Indicator</a>
     </p>
-    <p>source 2: https://www.verywellmind.com/the-myers-briggs-type-indicator-2795583 
+    <p style="position: absolute; top: 700px; right: 20px;">
+      Data Source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">MBTI-TYPES Data</a>
     </p>
-   
 </main>

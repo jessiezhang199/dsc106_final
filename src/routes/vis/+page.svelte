@@ -297,7 +297,7 @@
     <span>No Data</span>
   </div>
 </div>
-<p style="position: absolute; top: 700px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full</a></p>
+<p style="position: absolute; top: 700px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">MBTI-TYPES Data</a></p>
 <div style="position: absolute; top: 720px; left: 20px;">
   <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
 </div>
