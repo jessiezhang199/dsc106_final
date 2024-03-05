@@ -1,9 +1,10 @@
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
-  import { geoNaturalEarth1, geoPath } from 'd3-geo';
+  import { geoNaturalEarth1, geoPath, geoOrthographic} from 'd3-geo';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
+  import { zoom } from 'd3-zoom';
 
   let mbtiData = [], mapData;
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -71,8 +72,16 @@
   }
 
   function drawMap() {
-    const svg = d3.select('#map').html('');
-    const projection = geoNaturalEarth1();
+    const width = 800;
+    const height = 500;
+
+    const svg = d3.select('#map').html('')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .call(d3.drag().on('drag', dragged))
+      .call(zoom().on('zoom', zoomed));
+    const projection = geoOrthographic().translate([width / 2, height / 2]).scale(250).rotate([0, 0]);
     const pathGenerator = geoPath().projection(projection);
 
     svg.selectAll('path')
@@ -80,8 +89,8 @@
        .join('path')
        .attr('d', pathGenerator)
        .attr('fill', d => {
-         const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
-         return CountryData ? mbtiColors(CountryData.MBTI_type) : '#DED3D1';
+        const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
+        return CountryData ? mbtiColors(CountryData.MBTI_type) : '#DED3D1';
        })
        .on('mousemove', (event, d) => {
          const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
@@ -95,6 +104,18 @@
        .on('mouseleave', () => {
          showTooltip = false;
        });
+      function zoomed(event) {
+        const { transform } = event;
+        projection.translate(transform.apply([width / 2, height / 2]));
+        svg.selectAll('path').attr('d', pathGenerator);
+      }
+      function dragged(event) {
+      const rotate = projection.rotate();
+      const k = 1 + event.subject.y / height;
+
+      projection.rotate([rotate[0] + event.dx / k, rotate[1] - event.dy / k]);
+      svg.selectAll('path').attr('d', pathGenerator);
+    }
   }
 
   function searchData() {
@@ -159,6 +180,7 @@
       searchData();
     }
   }
+  
 </script>
 
 <style>
