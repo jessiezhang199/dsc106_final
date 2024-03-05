@@ -114,7 +114,7 @@
       
       function dragged(event) {
         const rotate = projection.rotate();
-        const k = Math.sqrt(projection.scale());
+        const k = 1 + event.subject.y / height;
 
         projection.rotate([rotate[0] + event.dx / k, rotate[1] - event.dy / k]);
         svg.selectAll('path').attr('d', pathGenerator);
