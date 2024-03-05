@@ -72,7 +72,7 @@
   }
 
   function drawMap() {
-    const width = 800;
+    const width = 900;
     const height = 500;
 
     const svg = d3.select('#map').html('')
@@ -80,7 +80,8 @@
       .attr('width', width)
       .attr('height', height)
       .call(d3.drag().on('drag', dragged))
-      .call(zoom().on('zoom', zoomed));
+      .call(zoom().on('zoom', zoomed))
+      .on('dblclick.zoom', null);
     const projection = geoOrthographic().translate([width / 2, height / 2]).scale(250).rotate([0, 0]);
     const pathGenerator = geoPath().projection(projection);
 
@@ -107,6 +108,7 @@
       function zoomed(event) {
         const { transform } = event;
         projection.translate(transform.apply([width / 2, height / 2]));
+        projection.scale(transform.k * 250); // Adjust the scale based on the transformation
         svg.selectAll('path').attr('d', pathGenerator);
       }
       function dragged(event) {
