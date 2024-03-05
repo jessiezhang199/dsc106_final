@@ -70,6 +70,7 @@
   } else {
     CountrySuggestions = [];
   }
+  
 
   function drawMap() {
     const width = 900;
@@ -80,11 +81,9 @@
       .attr('width', width)
       .attr('height', height)
       .call(d3.drag().on('drag', dragged))
-      .call(zoom().on('zoom', zoomed))
-      .on('dblclick.zoom', null);
+      .call(d3.zoom().on('zoom', zoomed));
     const projection = geoOrthographic().translate([width / 2, height / 2]).scale(250).rotate([0, 0]);
     const pathGenerator = geoPath().projection(projection);
-
     svg.selectAll('path')
        .data(mapData.features)
        .join('path')
@@ -104,20 +103,22 @@
        })
        .on('mouseleave', () => {
          showTooltip = false;
-       });
+       })
       function zoomed(event) {
         const { transform } = event;
         projection.translate(transform.apply([width / 2, height / 2]));
         projection.scale(transform.k * 250); // Adjust the scale based on the transformation
+ 
         svg.selectAll('path').attr('d', pathGenerator);
       }
+      
       function dragged(event) {
-      const rotate = projection.rotate();
-      const k = 1 + event.subject.y / height;
+        const rotate = projection.rotate();
+        const k = Math.sqrt(projection.scale());
 
-      projection.rotate([rotate[0] + event.dx / k, rotate[1] - event.dy / k]);
-      svg.selectAll('path').attr('d', pathGenerator);
-    }
+        projection.rotate([rotate[0] + event.dx / k, rotate[1] - event.dy / k]);
+        svg.selectAll('path').attr('d', pathGenerator);
+      }
   }
 
   function searchData() {
@@ -196,6 +197,7 @@
     display: block; /* Ensures the map is treated as a block-level element, which respects margin auto for centering */
     position: relative;
   }
+  
   .tooltip {
     position: fixed;
     padding: 4px 8px;
