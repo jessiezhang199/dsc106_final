@@ -116,19 +116,19 @@ footer {
   <section>
     <div class="text-container">Do you know Arnold Schwarzenegger is an 'architect'?</div>
     <div class="image-container">
-      <img src="/mbti_images/first_page_data/arnold.webp" alt="Arnold Schwarzenegger">
+      <img src="{base}/mbti_images/first_page_data/arnold.webp" alt="Arnold Schwarzenegger">
     </div>
   </section>
   <section>
     <div class="text-container">Do you know Madonna is an 'entrepreneur'?</div>
     <div class="image-container">
-      <img src="/mbti_images/first_page_data/madonna.webp" alt="Madonna">
+      <img src="{base}/mbti_images/first_page_data/madonna.webp" alt="Madonna">
     </div>
   </section>
   <section>
     <div class="text-container">Do you know Beyonce is a 'defender'?</div>
     <div class="image-container">
-      <img src="/mbti_images/first_page_data/beyonce.webp" alt="Beyonce">
+      <img src="{base}/mbti_images/first_page_data/beyonce.webp" alt="Beyonce">
     </div>
   </section>
 
