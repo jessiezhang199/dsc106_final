@@ -51,7 +51,66 @@
     const csv = await dataset.text();
     data = d3.csvParse(csv, d3.autoType);
     drawChart();
+    drawRadarChart();
   });
+
+
+  // function drawRadarChart() {
+
+  //   const radarData = data.find(d => d.mbti === selectedMBTI);
+
+  //   // Convert the radarData for the selected MBTI type into a suitable format
+  //   const formattedData = columns.map(category => ({
+  //     axis: category,
+  //     value: radarData[category]
+  //   }));
+
+
+  //   const radarWidth = 300;
+  //   const radarHeight = 300;
+
+  //   const radius = Math.min(radarWidth / 2, radarHeight / 2);
+  //   const angleSlice = (2 * Math.PI) / columns.length;
+
+  //   // Create radar chart SVG
+  //   const svg = d3.select('#radarChart')
+  //     .attr('width', radarWidth)
+  //     .attr('height', radarHeight)
+  //     .append('g')
+  //     .attr('transform', `translate(${radarWidth / 2}, ${radarHeight / 2})`);
+
+  //   // Radar chart scales
+  //   const rScale = d3.scaleLinear()
+  //     .domain([0, 1]) // Assuming your data is normalized between 0 and 1
+  //     .range([0, radius]);
+
+  //   // Radar chart paths
+  //   const line = d3.lineRadial()
+  //     .curve(d3.curveLinearClosed)
+  //     .radius(d => rScale(d.value))
+  //     .angle((d, i) => i * angleSlice);
+
+  //   // Radar chart axes
+  //   const axisGrid = svg.append('g').attr('class', 'axisWrapper');
+
+  //   axisGrid.selectAll('.levels')
+  //     .data(d3.range(1, 5).reverse())
+  //     .enter()
+  //     .append('circle')
+  //     .attr('class', 'gridCircle')
+  //     .attr('r', d => radius / 4 * d)
+  //     .style('fill', '#CDCDCD')
+  //     .style('fill-opacity', 0.1);
+
+  //   svg.append('path')
+  //     .datum(radarData)
+  //     .attr('d', line)
+  //     .style('stroke', mbtiColorPalette[selectedMBTI])
+  //     .style('fill', mbtiColorPalette[selectedMBTI])
+  //     .style('fill-opacity', 0.5);
+  // }
+
+
   function drawChart() {
     d3.select("#chart").select("svg").remove();
 
@@ -97,9 +156,9 @@
     drawChart();
   }
 </script>
+
 <div id="chart"></div>
-
-
+<svg id="radarChart"></svg>
 
 <select bind:value={selectedColumn} on:change="{() => updateColumn(selectedColumn)}">
   {#each columns as column}
