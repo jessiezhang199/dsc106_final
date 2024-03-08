@@ -1,8 +1,4 @@
 <script>
-  import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
-  
-
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
 
@@ -26,10 +22,15 @@
     'ESTJ': '#80bcc8'
   };
 
-
   let data = [];
+  let EI = 'E';
+  let NS = 'N';
+  let FT = 'F';
+  let PJ = 'P';
+  let selectedMBTI = `${EI}${NS}${FT}${PJ}`;
   let selectedColumn = 'danceability'; // Default column to display
-  const columns = ['danceability', 'valence', 'energy', 'loudness', 'acousticness', 'instrumentalness', 'liveness']; // List of columns
+  let mbtiTypes = []; // To store unique MBTI types from the dataset
+  const columns = ['danceability', 'valence', 'energy', 'loudness', 'acousticness', 'instrumentalness', 'liveness'];
   const yDomains = {
     'danceability': [0.55, 0.8],
     'valence': [0.4, 0.7],
@@ -41,85 +42,144 @@
     'default': [0, 0.2]
   };
 
-  let svg;
-  const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-  const width = 500 - margin.left - margin.right;
-  const height = 250 - margin.top - margin.bottom;
-
   onMount(async () => {
     const dataset = await fetch('page2_bar_df.csv');
     const csv = await dataset.text();
     data = d3.csvParse(csv, d3.autoType);
-    drawChart();
+    // Extract MBTI types from the dataset
+    mbtiTypes = Array.from(new Set(data.map(d => d.mbti)));
     drawRadarChart();
   });
 
+  function handleMBTIChange(event) {
+    selectedMBTI = `${EI}${NS}${FT}${PJ}`;
+    drawRadarChart();
+  }
 
-  // function drawRadarChart() {
+  function drawRadarChart() {
+    const radarWidth = 700;
+    const radarHeight = 600;
+    const radius = 150;
+    const angleSlice = (2 * Math.PI) / columns.length;
+    const levels = 5; // Number of concentric circles/levels
+    const chartCenterY = 300;  // Center Y position of the radar chart
+    
 
-  //   const radarData = data.find(d => d.mbti === selectedMBTI);
+    // Clear previous radar chart
+    d3.select('#radarChart').select('svg').remove();
 
-  //   // Convert the radarData for the selected MBTI type into a suitable format
-  //   const formattedData = columns.map(category => ({
-  //     axis: category,
-  //     value: radarData[category]
-  //   }));
+    const svg = d3.select('#radarChart')
+      .append('svg')
+      .attr('width', radarWidth)
+      .attr('height', radarHeight)
+      .append('g')
+      .attr('transform', `translate(${radarWidth / 2 -100}, ${chartCenterY})`);
+
+    // Radar scale
+    const rScale = d3.scaleLinear()
+      .range([0, radius])
+      .domain([0, 1]); // Assuming normalized data
 
 
-  //   const radarWidth = 300;
-  //   const radarHeight = 300;
+    // Draw axis lines
+    svg.selectAll('.axis')
+      .data(columns)
+      .enter()
+      .append('line')
+      .attr('class', 'axis-line')
+      .attr('x1', 0)
+      .attr('y1', 0)
+      .attr('x2', (d, i) => rScale(1) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('y2', (d, i) => rScale(1) * Math.sin(angleSlice * i - Math.PI / 2))
+      .style('stroke', '#CDCDCD')
+      .style('stroke-width', '2px');
+      
+    // Format the level labels to display one decimal point
+    svg.selectAll('.axisLabel')
+      .data(d3.range(1, (levels + 1)).reverse())
+      .enter().append('text')
+      .attr('class', 'label')
+      .attr('x', 4)
+      .attr('y', d => -d * radius / levels)
+      .attr('dy', '0.4em')
+      .style('font-size', '10px')
+      .attr('text-anchor', 'middle')
+      .text(d => parseFloat((d / levels).toFixed(1))); // Format to one decimal place
 
-  //   const radius = Math.min(radarWidth / 2, radarHeight / 2);
-  //   const angleSlice = (2 * Math.PI) / columns.length;
+    
+    // Draw the levels and level labels
+    for (let level = 0; level < levels; level++) {
+      const levelFactor = radius * ((level + 1) / levels);
+      svg.selectAll(`.levels-${level}`)
+        .data([1]) // Dummy data for binding
+        .enter()
+        .append('circle')
+        .attr('class', 'grid-circle')
+        .attr('r', levelFactor)
+        .style('fill', '#CDCDCD')
+        .style('stroke', '#CDCDCD')
+        .style('fill-opacity', 0.2)
+        .style('stroke-opacity', 0.7);
+    }
+    // Extract the data for the selected MBTI
+    const mbtiData = data.find(d => d.mbti === selectedMBTI);
 
-  //   // Create radar chart SVG
-  //   const svg = d3.select('#radarChart')
-  //     .attr('width', radarWidth)
-  //     .attr('height', radarHeight)
-  //     .append('g')
-  //     .attr('transform', `translate(${radarWidth / 2}, ${radarHeight / 2})`);
+    // Prepare the data for radar chart plotting
+    const radarData = columns.map((key, i) => {
+      return {
+        axis: key,
+        value: mbtiData[key]
+      };
+    });
 
-  //   // Radar chart scales
-  //   const rScale = d3.scaleLinear()
-  //     .domain([0, 1]) // Assuming your data is normalized between 0 and 1
-  //     .range([0, radius]);
+    radarData.push(radarData[0]); // Complete the radar loop
 
-  //   // Radar chart paths
-  //   const line = d3.lineRadial()
-  //     .curve(d3.curveLinearClosed)
-  //     .radius(d => rScale(d.value))
-  //     .angle((d, i) => i * angleSlice);
+    // Draw the radar chart
+    const line = d3.lineRadial()
+      .curve(d3.curveLinearClosed)
+      .radius(d => rScale(d.value))
+      .angle((d, i) => i * angleSlice);
 
-  //   // Radar chart axes
-  //   const axisGrid = svg.append('g').attr('class', 'axisWrapper');
+    // Append the radar area
 
-  //   axisGrid.selectAll('.levels')
-  //     .data(d3.range(1, 5).reverse())
-  //     .enter()
-  //     .append('circle')
-  //     .attr('class', 'gridCircle')
-  //     .attr('r', d => radius / 4 * d)
-  //     .style('fill', '#CDCDCD')
-  //     .style('fill-opacity', 0.1);
+    svg.append('path')
+      .datum(radarData)
+      .attr('d', line)
+      .style('stroke', mbtiColorPalette[selectedMBTI])
+      .style('fill', mbtiColorPalette[selectedMBTI])
+      .style('fill-opacity', 0.25);
 
-  //   svg.append('path')
-  //     .datum(radarData)
-  //     .attr('d', line)
-  //     .style('stroke', mbtiColorPalette[selectedMBTI])
-  //     .style('fill', mbtiColorPalette[selectedMBTI])
-  //     .style('fill-opacity', 0.5);
-  // }
+    // Add axes labels (optional)
+    svg.selectAll('.axisLabel')
+      .data(columns)
+      .enter()
+      .append('text')
+      .attr('class', 'axisLabel')
+      .attr('x', (d, i) => rScale(1.1) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('y', (d, i) => rScale(1.1) * Math.sin(angleSlice * i - Math.PI / 2))
+      .text(d => d)
+      .style('font-size', '10px')
+      .attr('text-anchor', 'middle');
+  }
+  let imageUrl = `/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; // Assuming the images are in PNG format.
 
+  $: imageUrl = `/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; 
+  $: selectedMBTI = `${EI}${NS}${FT}${PJ}`;
+  $: imageUrl = `/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; 
 
   function drawChart() {
     d3.select("#chart").select("svg").remove();
 
-    svg = d3.select("#chart")
-      .append("svg")
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const width = 700 - margin.left - margin.right;
+    const height = 300 - margin.top - margin.bottom;
+
+    const svg = d3.select("#chart").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
     const x = d3.scaleBand()
       .range([0, width])
@@ -130,9 +190,18 @@
     // Set the domain for the y-scale based on the selected column
     const domain = yDomains[selectedColumn] || yDomains['default'];
     y.domain(domain);
-
     x.domain(data.map(d => d.mbti));
 
+    // X-axis
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+    // Y-axis
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    // Create bars
     svg.selectAll(".bar")
       .data(data)
       .enter().append("rect")
@@ -142,13 +211,6 @@
       .attr("y", d => y(d[selectedColumn]))
       .attr("height", d => height - y(d[selectedColumn]))
       .attr("fill", d => mbtiColorPalette[d.mbti]);
-
-    svg.append("g")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x));
-
-    svg.append("g")
-      .call(d3.axisLeft(y));
   }
 
   function updateColumn(newColumn) {
@@ -157,14 +219,75 @@
   }
 </script>
 
-<div id="chart"></div>
-<svg id="radarChart"></svg>
+<style>
+  .container {
+    display: flex;
+    align-items: flex-start; /* Align items vertically in the center */
+    justify-content: center; /* Center items horizontally */
+  }
 
-<select bind:value={selectedColumn} on:change="{() => updateColumn(selectedColumn)}">
-  {#each columns as column}
-    <option value="{column}">{column}</option>
-  {/each}
-</select>
+  .mbti-image {
+    width: 350px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: -300px; /* Add some space between the image and the radar chart */
+    margin-top: 100px; 
+  }
+  #radarChart {
+    width: 150px; /* Set the width of the radar chart */
+    height: 150px; /* Set the height of the radar chart */
+    margin-left: 30px;
+  }
+
+  #radarChart svg {
+    width: 100%; /* Make the SVG fill the container */
+    height: 100%; /* Make the SVG fill the container */
+  }
+
+  #chart-container {
+    text-align: center; /* Center the chart container */
+    margin-top: 100px; /* Space from the top elements */
+  }
+</style>
+
+<!-- MBTI Type Selection Dropdown -->
+<div class="mbti-selectors">
+  <select bind:value={EI} on:change={handleMBTIChange}>
+    <option value="E">E</option>
+    <option value="I">I</option>
+  </select>
+
+  <select bind:value={NS} on:change={handleMBTIChange}>
+    <option value="N">N</option>
+    <option value="S">S</option>
+  </select>
+
+  <select bind:value={FT} on:change={handleMBTIChange}>
+    <option value="F">F</option>
+    <option value="T">T</option>
+  </select>
+
+  <select bind:value={PJ} on:change={handleMBTIChange}>
+    <option value="P">P</option>
+    <option value="J">J</option>
+  </select>
+</div>
+
+<div class="container">
+  <div>
+    <img class="mbti-image" src={imageUrl} alt={selectedMBTI}>
+  </div>
+  <div id="radarChart"></div>
+</div>
+
+<div id="chart-container">
+  <div id="chart"></div>
+  <!-- Dropdown to select column for the bar chart -->
+  <select bind:value={selectedColumn} on:change="{() => updateColumn(selectedColumn)}">
+    {#each columns as column}
+      <option value="{column}">{column}</option>
+    {/each}
+  </select>
+</div>
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     <button on:click={() => goto(`${base}/vis`)}>Learn more</button>
