@@ -305,12 +305,6 @@
     height: 150px; /* Set the height of the radar chart */
     margin-left: 30px;
   }
-
-  #radarChart svg {
-    width: 100%; /* Make the SVG fill the container */
-    height: 100%; /* Make the SVG fill the container */
-  }
-
   #chart-container {
     text-align: center; /* Center the chart container */
     margin-top: 100px; /* Space from the top elements */
