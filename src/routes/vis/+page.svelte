@@ -75,23 +75,50 @@
   function drawMap() {
     const width = 900;
     const height = 500;
+    let dragging = false;
+    let dragStart, dragEnd;
+    let accumulatedRotation = [0, 0];
+    let rotationTimer;
 
     const svg = d3.select('#map').html('')
       .append('svg')
       .attr('width', width)
       .attr('height', height)
-      .call(d3.drag().on('drag', dragged))
+      .call(d3.drag().on('start', dragStartHandler).on('drag', dragged).on('end', dragEndHandler))
       .call(d3.zoom().on('zoom', zoomed));
+  
+
     const projection = geoOrthographic().translate([width / 2, height / 2]).scale(250).rotate([0, 0]);
     const pathGenerator = geoPath().projection(projection);
-    svg.selectAll('path')
+    svg.append('circle')
+    .attr('cx', width / 2)
+    .attr('cy', height / 2)
+    .attr('r', projection.scale())
+    .attr('fill', '#1E90FF');
+
+    const graticule = d3.geoGraticule()
+      .step([20, 20]);
+
+    svg.append('path')
+      .datum(graticule())
+      .attr('class', 'graticule')
+      .attr('d', pathGenerator)
+      .attr('fill', 'none')
+      .attr('stroke', 'white')
+      .attr('stroke-width', 0.5)
+      .attr('stroke-dasharray', '2 2');
+
+    svg.selectAll('path.country')
        .data(mapData.features)
        .join('path')
+       .attr('class', 'country')
        .attr('d', pathGenerator)
        .attr('fill', d => {
         const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
         return CountryData ? mbtiColors(CountryData.MBTI_type) : '#DED3D1';
        })
+       .attr('stroke', 'white') // Add this line to set the stroke color
+       .attr('stroke-width', 0.3)
        .on('mousemove', (event, d) => {
          const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
          tooltipContent = CountryData ?
@@ -103,22 +130,68 @@
        })
        .on('mouseleave', () => {
          showTooltip = false;
-       })
+       });
+    enableRotation();
+    function enableRotation() {
+      if (rotationTimer) {
+        rotationTimer.stop();
+      }
+
+      let lastTime = Date.now();
+
+      rotationTimer = d3.timer(function () {
+        if (!dragging) {
+          const now = Date.now();
+          const delta = now - lastTime;
+          lastTime = now;
+
+           // Resume rotation after 1 second of mouse inactivity
+            const rotate = projection.rotate();
+            const rotationSpeed = 0.005; // Adjust rotation speed as needed
+            projection.rotate([rotate[0] + rotationSpeed * delta, rotate[1]]);
+            svg.selectAll('path.country').attr('d', pathGenerator);
+            svg.select('path.graticule').attr('d', pathGenerator);
+          
+        }
+      });
+    }
+
       function zoomed(event) {
         const { transform } = event;
         projection.translate(transform.apply([width / 2, height / 2]));
         projection.scale(transform.k * 250); // Adjust the scale based on the transformation
- 
-        svg.selectAll('path').attr('d', pathGenerator);
+        
+        svg.select('circle').attr('r', projection.scale());
+        svg.selectAll('path.country').attr('d', pathGenerator);
+        svg.select('path.graticule').attr('d', pathGenerator); 
       }
-      
+      function dragStartHandler(event) {
+        dragging = true;
+        dragStart = projection.invert(d3.pointer(event));
+      }
       function dragged(event) {
-        const rotate = projection.rotate();
-        const k = 1 + event.subject.y / height;
+        if (dragging) {
+          d3.timerFlush();
 
-        projection.rotate([rotate[0] + event.dx / k, rotate[1] - event.dy / k]);
-        svg.selectAll('path').attr('d', pathGenerator);
+          const rotate = projection.rotate();
+          const k = 1 + event.subject.y / height;
+
+          projection.rotate([rotate[0] + event.dx / k, rotate[1] - event.dy / k]);
+          svg.selectAll('path').attr('d', pathGenerator);
+        }
       }
+      function dragEndHandler() {
+        dragging = false;
+      }
+
+      svg.on('mousedown', (event) => {
+        dragging = true;
+        dragStart = projection.invert(d3.pointer(event));
+      });
+
+      svg.on('mouseup', () => {
+        dragEndHandler();
+      });
   }
 
   function searchData() {
