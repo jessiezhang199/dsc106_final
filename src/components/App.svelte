@@ -128,9 +128,9 @@ section:nth-child(4) .text-container {
   border-radius: 15px; /* Rounded corners for the container */
   margin: 20px; /* Ensures some spacing around the text container */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  font-size: 1.1rem; /* Slightly larger font size */
+  font-size: 1.5rem; /* Slightly larger font size */
   line-height: 1.6; /* Improved line height for better readability */
-  max-width: 800px; /* Optimal reading width */
+  max-width: 700px; /* Optimal reading width */
   text-align: justify; /* Justified text for a cleaner look */
 }
 
@@ -138,7 +138,7 @@ section:nth-child(4) .text-container {
 section:nth-child(4) .text-container p:first-child {
   font-weight: bold;
   color: #FFD700; /* Gold color for emphasis */
-  font-size: 1.2rem; /* Slightly larger than the rest */
+  font-size: 1.8rem; /* Slightly larger than the rest */
 }
 
 /* Optional: Add a subtle animation to the text container for engagement */
