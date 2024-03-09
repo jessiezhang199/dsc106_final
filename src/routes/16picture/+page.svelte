@@ -262,18 +262,6 @@
 
 </script>
 
-<div
-  class="music-container"
-  on:dblclick={togglePlayPause}
-  on:keydown={handleKeyPress}
-  tabindex="0"
-  role="button"
-  aria-pressed={isPlaying.toString()}
->
-  <audio bind:this={audio} src="{base}/music/{selectedMBTI}.mp3"></audio>
-  <button on:click={handleButtonClick}>Play Music</button>
-</div>
-
 <style>
   .music-container {
     position: fixed; 
@@ -367,6 +355,19 @@
   <div id="radarChart"></div>
 </div>
 
+
+<div
+  class="music-container"
+  on:dblclick={togglePlayPause}
+  on:keydown={handleKeyPress}
+  tabindex="0"
+  role="button"
+  aria-pressed={isPlaying.toString()}
+>
+  <audio bind:this={audio} src="{base}/music/{selectedMBTI}.mp3"></audio>
+  <button on:click={handleButtonClick}>Play Music</button>
+</div>
+
 <div id="chart-container">
   <!-- Dropdown to select column for the bar chart -->
   <select bind:value={selectedColumn} on:change="{() => updateColumn(selectedColumn)}">
@@ -392,4 +393,3 @@
     Image Source: <a href="https://www.xiaohongshu.com/user/profile/6033ab1800000000010075ac?xhsshare=CopyLink&appuid=5c4e9b04000000001203ea7e&apptime=1709362317" target="_blank">xiaohongshu</a>
   </p>
 </div>
-
