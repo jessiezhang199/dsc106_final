@@ -148,16 +148,28 @@
     pieChartContainer.id = 'pieChartContainer';
     document.body.appendChild(pieChartContainer);
   }
+    // const plotData = [{
+    //   values: [data.ENFJ, data.ENFP, data.ENTJ, data.ENTP, data.ESFJ, data.ESFP, data.ESTJ, data.ESTP, data.INFJ, data.INFP, data.INTJ, data.INTP, data.ISFJ, data.ISFP, data.ISTJ, data.ISTP],
+    //   labels: ["ENFJ", "ENFP", "ENTJ", "ENTP", "ESFJ", "ESFP", "ESTJ", "ESTP", "INFJ", "INFP", "INTJ", "INTP", "ISFJ", "ISFP", "ISTJ", "ISTP"],
+    //   type: 'pie',
+    //   marker: {
+    //   colors: mbtiColors.range()
+    // },
+    // textinfo: 'label+percent', // Include labels and percentages in the hover info
+    // hoverinfo: 'label+percent'
+    // }];
+    const mbtiTypes = ["ENFJ", "ENFP", "ENTJ", "ENTP", "ESFJ", "ESFP", "ESTJ", "ESTP", "INFJ", "INFP", "INTJ", "INTP", "ISFJ", "ISFP", "ISTJ", "ISTP"]
     const plotData = [{
-      values: [data.ENFJ, data.ENFP, data.ENTJ, data.ENTP, data.ESFJ, data.ESFP, data.ESTJ, data.ESTP, data.INFJ, data.INFP, data.INTJ, data.INTP, data.ISFJ, data.ISFP, data.ISTJ, data.ISTP],
-      labels: ["ENFJ", "ENFP", "ENTJ", "ENTP", "ESFJ", "ESFP", "ESTJ", "ESTP", "INFJ", "INFP", "INTJ", "INTP", "ISFJ", "ISFP", "ISTJ", "ISTP"],
+      values: mbtiTypes.map(type => data[type]),
+      labels: mbtiTypes,
       type: 'pie',
       marker: {
-      colors: mbtiColors.range()
-    },
-    textinfo: 'label+percent', // Include labels and percentages in the hover info
-    hoverinfo: 'label+percent'
+        colors: mbtiTypes.map(type => mbtiColors(type)), // Use mbtiColors for each type
+      },
+      textinfo: 'label+percent',
+      hoverinfo: 'label+percent',
     }];
+
     console.log(plotData)
 
     const plotLayout = {
@@ -183,10 +195,6 @@
     }
   }, 5000); // Adjust the delay time (in milliseconds) as needed
 }
-
-
-  
-  
 
   function drawMap() {
     const width = 900;
