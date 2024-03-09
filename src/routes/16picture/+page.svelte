@@ -252,12 +252,29 @@
       isPlaying = !isPlaying;
     }
   }
+  function handleKeyPress(event) {
+    // Toggle play/pause on Enter or Space key press
+    if (event.key === 'Enter' || event.key === ' ') {
+      togglePlayPause();
+    }
+  }
+  function handleButtonClick(event) {
+    event.stopPropagation(); // Prevent click from propagating to the parent div
+    togglePlayPause();
+  }
 
 </script>
 
-<div class="music-container"  on:dblclick={togglePlayPause}>
+<div
+  class="music-container"
+  on:dblclick={togglePlayPause}
+  on:keydown={handleKeyPress}
+  tabindex="0"
+  role="button"
+  aria-pressed={isPlaying.toString()}
+>
   <audio bind:this={audio} src={audioSource}></audio>
-  <button on:click={togglePlayPause}>Play Music</button>
+  <button on:click={handleButtonClick}>Play Music</button>
 </div>
 
 <style>
