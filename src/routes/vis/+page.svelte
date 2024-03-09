@@ -182,8 +182,8 @@
     Plotly.newPlot('pieChartContainer', plotData, plotLayout);
 
     pieChartContainer.style.position = 'absolute';
-    pieChartContainer.style.left = `${mouseX}px`;
-    pieChartContainer.style.top = `${mouseY}px`;
+    pieChartContainer.style.left = `${mouseX + 10}px`;
+    pieChartContainer.style.top = `${mouseY + 10}px`;
     
     rotationPaused = true;
   }
@@ -291,7 +291,6 @@
             projection.rotate([rotate[0] + rotationSpeed * delta, rotate[1]]);
             svg.selectAll('path.country').attr('d', pathGenerator);
             svg.select('path.graticule').attr('d', pathGenerator);
-          
         }
       });
     }
