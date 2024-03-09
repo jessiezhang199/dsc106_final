@@ -1,12 +1,146 @@
+<script>
+  import { writable } from 'svelte/store';
+  import { base } from '$app/paths';
 
-<h1>This is quiz page</h1>
-<p style="position: absolute; top: 250px; left: 20px; font-size: 16px; max-width: 150px;">
-    Play the quiz to guess the MBTI of famous characters!
-</p>
+  const categoryImages = {
+    "Barbie": ["ISFJ-Gloria.jpg", "ISFP-Allen.jpg", "ESFJ-Barbie.jpg", "ESFP-Ken.jpg"],
+    "DC Comics": ["ENFJ-Wonder_woman.jpg", "ENFP-Harley_Quinn.jpg", "ENTP-The_Joker.jpg", "ESTP-Aquaman.jpg", "ESTP-Cat_Woman.jpg", "INFP-The_Flash.jpg", "INTJ-Batman.jpg", "ISFJ-Superman.jpg", "ISTJ-Cyborg.jpg"],
+    "Harry Potter": ["ENTP-Fred_Weasley&George_Weasley.jpg", "ESFP-Ron_Weasley.jpg", "ESTJ-Hermione_Granger.jpg", "INFP-Luna_Lovegood.jpg", "ISFJ-Ginny_Weasley.jpg", "ISFP-Harry_Potter.jpg"],
+    "The Avengers": ["ENFP-Spider_Man.jpg", "ENTP-Iron_Man.jpg", "ESTP-God_of_Thunder.jpg", "ESTP-Rocket_Raccoon.jpg", "INFJ-Vision.jpg", "INFP-Scarlet_Witch.jpg", "INTJ-Doctor_Strange.jpg", "ISFJ-Captain_America.jpg", "ISFJ-Groot.jpg", "ISFP-Hulk.jpg", "ISTP-Black_Widow.jpg"]
+  };
 
-<p style="position: absolute; top: 700px; right: 20px;">
-  Image Source: <a href="https://www.xiaohongshu.com/user/profile/56b94d39b8ce1a08d669903e?xhsshare=CopyLink&appuid=5c4e9b04000000001203ea7e&apptime=1709362169" target="_blank">xiaohongshu</a>
-</p>
-<p style="position: absolute; top: 730px; right: 20px;">
-  Character MBTI Type Source: <a href="https://www.personality-database.com/" target="_blank">Personality Database</a>
-</p>
+  let selectedCategory = '';
+  let quizStarted = false;
+  let currentQuestionIndex = 0;
+  let correctAnswers = writable(0);
+  let currentChoices = [];
+  let imagesForQuiz = [];
+  let feedbackMessage = '';
+  let showFeedback = false;
+  let showResults = false;
+  let resultsMessage = '';
+
+  const allMBTITypes = ["INTJ", "ENTP", "INFP", "ENTJ", "ENFJ", "ISTJ", "ISFJ", "ESTP", "ESFP", "ENFP", "INTP", "ISTP", "ISFP", "ESTJ", "ESFJ", "INFJ"];
+
+  function startQuiz() {
+    imagesForQuiz = selectRandomImages(categoryImages[selectedCategory]);
+    correctAnswers.set(0);
+    quizStarted = true;
+    currentQuestionIndex = 0;
+    showResults = false;
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    let imageFileName = imagesForQuiz[currentQuestionIndex];
+    let correctAnswer = imageFileName.split('-')[0];
+    let incorrectAnswers = allMBTITypes.filter(mbti => mbti !== correctAnswer);
+    let randomIncorrectAnswer = incorrectAnswers[Math.floor(Math.random() * incorrectAnswers.length)];
+    currentChoices = shuffleArray([correctAnswer, randomIncorrectAnswer]);
+    showFeedback = false;
+    feedbackMessage = '';
+  }
+
+  function selectAnswer(answer) {
+    const correctAnswer = imagesForQuiz[currentQuestionIndex].split('-')[0];
+    if (answer === correctAnswer) {
+      correctAnswers.update(n => n + 1);
+      feedbackMessage = "Correct!";
+    } else {
+      feedbackMessage = `Incorrect. The correct answer is ${correctAnswer}.`;
+    }
+    showFeedback = true;
+
+    if (currentQuestionIndex < imagesForQuiz.length - 1) {
+      setTimeout(() => {
+        currentQuestionIndex++;
+        loadQuestion();
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        endQuiz();
+      }, 2000);
+    }
+  }
+
+  function endQuiz() {
+    quizStarted = false;
+    showResults = true;
+    correctAnswers.subscribe(value => {
+      if (value === 4) {
+        resultsMessage = "Excellent, you are a master in MBTI!";
+      } else if (value >= 2) {
+        resultsMessage = "Great job, you know quite a bit!";
+      } else {
+        resultsMessage = "Looks like there's more to learn, try again!";
+      }
+      resultsMessage += ` You answered ${value} out of 4 correctly.`;
+    });
+  }
+
+  function restartQuiz() {
+    selectedCategory = '';
+    quizStarted = false;
+    showResults = false;
+    currentQuestionIndex = 0;
+    correctAnswers.set(0);
+  }
+
+  // Helper function to shuffle array
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  // Helper function to select random images
+  function selectRandomImages(images) {
+    let result = [];
+    let tempArray = [...images];
+    while (result.length < 4) {
+      let index = Math.floor(Math.random() * tempArray.length);
+      result.push(tempArray.splice(index, 1)[0]);
+    }
+    return result;
+  }
+</script>
+
+<style>
+  /* Other styles... */
+
+  .quiz-image {
+    width: auto; /* maintain aspect ratio */
+    max-width: 50%; /* adjust this value to scale the image size */
+    height: auto; /* maintain aspect ratio */
+    border-radius: 10px; /* if you want rounded corners */
+  }
+</style>
+
+{#if !quizStarted && !showResults}
+  <div>
+    <h2>Select a Quiz Category</h2>
+    <!-- Replace the select and option HTML with buttons for each category -->
+    {#each Object.keys(categoryImages) as category (category)}
+      <button on:click={() => { selectedCategory = category; startQuiz(); }}>
+        {category}
+      </button>
+    {/each}
+  </div>
+{:else if quizStarted}
+  <div>
+    <img class="quiz-image" src={`${base}/mbti_images/quiz_data/${selectedCategory}/${imagesForQuiz[currentQuestionIndex]}`} alt="Character image">
+    {#each currentChoices as choice}
+      <button on:click={() => selectAnswer(choice)}>{choice}</button>
+    {/each}
+    {#if showFeedback}
+      <p>{feedbackMessage}</p>
+    {/if}
+  </div>
+{:else if showResults}
+  <div>
+    <p>{resultsMessage}</p>
+    <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
+  </div>
+{/if}
