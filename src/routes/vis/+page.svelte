@@ -36,6 +36,11 @@
       };
 
   onMount(async () => {
+    const plotlyScript = document.createElement('script');
+    plotlyScript.src = 'https://cdn.plot.ly/plotly-latest.min.js';
+    plotlyScript.async = true;
+    document.head.appendChild(plotlyScript);
+
     const mbtiRes = await fetch('mbti_clean.csv');
     const csvText = await mbtiRes.text();
     const pieChartRes = await fetch('mbti_all_type_clean.csv');
@@ -85,59 +90,101 @@
   } else {
     CountrySuggestions = [];
   }
-  function showPieChart(data,mouseX, mouseY) {
-    d3.select('.pieChart').html('');
-    let pieData = [
-      { type: 'ENFJ', value: data.ENFJ },
-      { type: 'ENFP', value: data.ENFP},
-      { type: 'ENTJ', value: data.ENTJ },
-      { type: 'ENTP', value: data.ENTP },
-      { type: 'ESFJ', value: data.ESFJ },
-      { type: 'ESFP', value: data.ESFP },
-      { type: 'ESTJ', value: data.ESTJ },
-      { type: 'ESTP', value: data.ESTP },
-      { type: 'INFJ', value: data.INFJ },
-      { type: 'INFP', value: data.INFP },
-      { type: 'INTJ', value: data.INTJ },
-      { type: 'INTP', value: data.INTP },
-      { type: 'ISFJ', value: data.ISFJ },
-      { type: 'ISFP', value: data.ISFP },
-      { type: 'ISTJ', value: data.ISTJ },
-      { type: 'ISTP', value: data.ISTP },  
-    ];
-    const width = 300;
-    const height = 300;
-    const radius = Math.min(width, height) / 2;
-    const arc = d3.arc()
-      .outerRadius(radius - 10)
-      .innerRadius(0);
+  // function showPieChart(data,mouseX, mouseY) {
+  //   d3.select('.pieChart').html('');
+  //   let pieData = [
+  //     { type: 'ENFJ', value: data.ENFJ },
+  //     { type: 'ENFP', value: data.ENFP},
+  //     { type: 'ENTJ', value: data.ENTJ },
+  //     { type: 'ENTP', value: data.ENTP },
+  //     { type: 'ESFJ', value: data.ESFJ },
+  //     { type: 'ESFP', value: data.ESFP },
+  //     { type: 'ESTJ', value: data.ESTJ },
+  //     { type: 'ESTP', value: data.ESTP },
+  //     { type: 'INFJ', value: data.INFJ },
+  //     { type: 'INFP', value: data.INFP },
+  //     { type: 'INTJ', value: data.INTJ },
+  //     { type: 'INTP', value: data.INTP },
+  //     { type: 'ISFJ', value: data.ISFJ },
+  //     { type: 'ISFP', value: data.ISFP },
+  //     { type: 'ISTJ', value: data.ISTJ },
+  //     { type: 'ISTP', value: data.ISTP },  
+  //   ];
+  //   const width = 300;
+  //   const height = 300;
+  //   const radius = Math.min(width, height) / 2;
+  //   const arc = d3.arc()
+  //     .outerRadius(radius - 10)
+  //     .innerRadius(0);
 
-    const pie = d3.pie()
-      .value(d => d.value);
-    const svg = d3.select('.pieChart')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .style('position', 'absolute') // Position the pie chart absolutely
-      .style('left', `${mouseX}px`) // Set the left position based on mouse X coordinate
-      .style('top', `${mouseY}px`)
-      .append('g')
-      .attr('transform', `translate(${width / 2},${height / 2})`);
-      const arcs = svg.selectAll('arc')
-        .data(pie(pieData))
-        .enter()
-        .append('g')
-        .attr('class', 'arc');
-      arcs.append('path')
-        .attr('d', arc)
-        .attr('fill', d => mbtiColors(d.data.type));
+  //   const pie = d3.pie()
+  //     .value(d => d.value);
+  //   const svg = d3.select('.pieChart')
+  //     .append('svg')
+  //     .attr('width', width)
+  //     .attr('height', height)
+  //     .style('position', 'absolute') // Position the pie chart absolutely
+  //     .style('left', `${mouseX}px`) // Set the left position based on mouse X coordinate
+  //     .style('top', `${mouseY}px`)
+  //     .append('g')
+  //     .attr('transform', `translate(${width / 2},${height / 2})`);
+  //     const arcs = svg.selectAll('arc')
+  //       .data(pie(pieData))
+  //       .enter()
+  //       .append('g')
+  //       .attr('class', 'arc');
+  //     arcs.append('path')
+  //       .attr('d', arc)
+  //       .attr('fill', d => mbtiColors(d.data.type));
       
 
 
+  // }
+
+  function showPieChart(data, mouseX, mouseY) {
+    if (!pieChartContainer) {
+    // Create the pieChartContainer div if it doesn't exist
+    pieChartContainer = document.createElement('div');
+    pieChartContainer.id = 'pieChartContainer';
+    document.body.appendChild(pieChartContainer);
   }
-  function remove() {
-    d3.select('.pieChart').html('');
+    const plotData = [{
+      values: [data.ENFJ, data.ENFP, data.ENTJ, data.ENTP, data.ESFJ, data.ESFP, data.ESTJ, data.ESTP, data.INFJ, data.INFP, data.INTJ, data.INTP, data.ISFJ, data.ISFP, data.ISTJ, data.ISTP],
+      labels: ["ENFJ", "ENFP", "ENTJ", "ENTP", "ESFJ", "ESFP", "ESTJ", "ESTP", "INFJ", "INFP", "INTJ", "INTP", "ISFJ", "ISFP", "ISTJ", "ISTP"],
+      type: 'pie',
+      marker: {
+      colors: mbtiColors.range()
+    },
+    textinfo: 'label+percent', // Include labels and percentages in the hover info
+    hoverinfo: 'label+percent'
+    }];
+    console.log(plotData)
+
+    const plotLayout = {
+      title: `MBTI Distribution in ${data.Country}`,
+      showlegend: false,
+      width: 400, // Set the desired width
+      height: 400, // Set the desired height
+    };
+
+    Plotly.newPlot('pieChartContainer', plotData, plotLayout);
+
+    pieChartContainer.style.position = 'absolute';
+    pieChartContainer.style.left = `${mouseX}px`;
+    pieChartContainer.style.top = `${mouseY}px`;
+    
+    rotationPaused = true;
   }
+  function removePieChartAfterDelay() {
+  setTimeout(() => {
+    if (pieChartContainer) {
+      document.body.removeChild(pieChartContainer);
+      pieChartContainer = null;
+    }
+  }, 5000); // Adjust the delay time (in milliseconds) as needed
+}
+
+
   
   
 
@@ -187,7 +234,7 @@
        })
        .attr('stroke', 'white') // Add this line to set the stroke color
        .attr('stroke-width', 0.3)
-       .on('mouseover', (event, d) =>{
+       .on('mousemove', (event, d) =>{
             // Display pie chart when the mouse is over the country
             const countryPieData = pieChartData.find(pd => pd.Country === d.properties.name);
             if (countryPieData) {
@@ -195,24 +242,24 @@
                // Adjust Y position to avoid cursor overlap
               
             }
-            tooltipX = event.pageX;
-            tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
+             // Adjust Y position to avoid cursor overlap
             showPie = true;
             rotationPaused = true;
         })
-       .on('mousemove', (event, d) => {
-         const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
-         tooltipContent = CountryData ?
-                   `${d.properties.name} ${CountryData.MBTI_type}: ${CountryData.Percentage} (Percentage of All Population)` :
-                   `${d.properties.name}: No data`; // Include Country name before "No data"
-         tooltipX = event.pageX;
-         tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
-         showTooltip = true;
-         rotationPaused = true;
-       })
+      //  .on('mousemove', (event, d) => {
+      //    const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
+      //    tooltipContent = CountryData ?
+      //              `${d.properties.name} ${CountryData.MBTI_type}: ${CountryData.Percentage} (Percentage of All Population)` :
+      //              `${d.properties.name}: No data`; // Include Country name before "No data"
+      //    tooltipX = event.pageX;
+      //    tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
+      //    showTooltip = true;
+      //    rotationPaused = true;
+      //  })
        .on('mouseleave', () => {
          showTooltip = false;
-         remove();
+         removePieChartAfterDelay();
+         showPie = false;
          rotationPaused = false;
         
        });
@@ -369,7 +416,7 @@
     opacity: 1;
   }
   .pieChart{
-    opacity: 0.7;
+    opacity: 0.5;
   }
   
 
@@ -461,9 +508,10 @@
   {tooltipContent}
 </div>
 
-<div class="pieChart" style="top: {tooltipY}px; left: {tooltipY}px;" class:show="{showPie}">
+<div class="pieChart" style="top: {tooltipY}px; left: {tooltipX}px;" class:show="{showPie}">
   {pieChartContainer}
 </div>
+
 
 <div class="legend-container">
   {#each mbtiColors.domain() as type}
