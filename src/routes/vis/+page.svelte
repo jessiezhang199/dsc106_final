@@ -4,7 +4,6 @@
   import { geoNaturalEarth1, geoPath, geoOrthographic} from 'd3-geo';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
-  import { zoom } from 'd3-zoom';
 
   let mbtiData = [], mapData;
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -74,10 +73,9 @@
 
   function drawMap() {
     const width = 900;
-    const height = 500;
+    const height = 600;
     let dragging = false;
     let dragStart, dragEnd;
-    let accumulatedRotation = [0, 0];
     let rotationTimer;
 
     const svg = d3.select('#map').html('')
@@ -85,10 +83,9 @@
       .attr('width', width)
       .attr('height', height)
       .call(d3.drag().on('start', dragStartHandler).on('drag', dragged).on('end', dragEndHandler))
-      .call(d3.zoom().on('zoom', zoomed));
   
 
-    const projection = geoOrthographic().translate([width / 2, height / 2]).scale(250).rotate([0, 0]);
+    const projection = geoOrthographic().translate([width / 2, height / 2]).scale(300).rotate([0, 0]);
     const pathGenerator = geoPath().projection(projection);
     svg.append('circle')
     .attr('cx', width / 2)
@@ -156,15 +153,6 @@
       });
     }
 
-      function zoomed(event) {
-        const { transform } = event;
-        projection.translate(transform.apply([width / 2, height / 2]));
-        projection.scale(transform.k * 250); // Adjust the scale based on the transformation
-        
-        svg.select('circle').attr('r', projection.scale());
-        svg.selectAll('path.country').attr('d', pathGenerator);
-        svg.select('path.graticule').attr('d', pathGenerator); 
-      }
       function dragStartHandler(event) {
         dragging = true;
         dragStart = projection.invert(d3.pointer(event));
