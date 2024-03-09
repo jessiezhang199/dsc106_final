@@ -77,7 +77,6 @@
     let dragging = false;
     let dragStart, dragEnd;
     let rotationTimer;
-
     const svg = d3.select('#map').html('')
       .append('svg')
       .attr('width', width)
@@ -137,7 +136,7 @@
       let lastTime = Date.now();
 
       rotationTimer = d3.timer(function () {
-        if (!dragging) {
+        if (!dragging ) {
           const now = Date.now();
           const delta = now - lastTime;
           lastTime = now;
@@ -196,6 +195,7 @@
         searchResult = `${searchCountry} ${filteredData[0].MBTI_type}: ${filteredData[0].Percentage} (Percentage of All Population)`;
         // Highlight the searched Country
         highlightCountry(searchCountry);
+        
     } else {
         searchResult = `${searchCountry}: No data available.`;
     }
@@ -209,15 +209,17 @@
     const searchNameLower = CountryName.toLowerCase();
 
     // Reset any previous highlights
-    d3.select('#map').selectAll('path')
-        .style('stroke', null)
-        .style('stroke-width', null);
+    d3.select('#map').selectAll('path.country')
+      .style('fill', d => {
+        const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
+        return CountryData ? mbtiColors(CountryData.MBTI_type) : '#DED3D1';
+      }).style('stroke', 'white') // Reset stroke color
+      .style('stroke-width', 0.3); 
 
     // Apply a stroke to the searched Country for highlighting
-    d3.select('#map').selectAll('path')
-        .filter(d => d.properties.name.toLowerCase() === searchNameLower)
-        .style('stroke', 'blue') // Highlight color
-        .style('stroke-width', 2); // Highlight width
+    d3.select('#map').selectAll('path.country')
+      .filter(d => d.properties.name.toLowerCase() === searchNameLower)
+      .style('fill', '#51544d');
   }
 
  function selectCountry(Country) {
@@ -324,6 +326,7 @@
   .legend-item span {
     font-size: 14px;
   }
+
 </style>
 
 <h1>Which MBTI Type is Most Common in Your Country?</h1>
