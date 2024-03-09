@@ -22,9 +22,30 @@
   let pieChartData;
 
 
+  const mbtiColorPalette = {
+    'INFP': '#48ad82',
+    'ENFP': '#71bf9e',
+    'INFJ': '#1a523a',
+    'ENFJ': '#103123',
+    'INTP': '#9874a6',
+    'ENTP': '#af93ba',
+    'INTJ': '#70507d',
+    'ENTJ': '#46324e',
+    'ISFP': '#e8b859',
+    'ESFP': '#edc87e',
+    'ISTP': '#b78d38',
+    'ESTP': '#f5dfb5',
+    'ISFJ': '#346f7b',
+    'ESFJ': '#5ca9b8',
+    'ISTJ': '#2c5f6a',
+    'ESTJ': '#80bcc8'
+  };
+  const mbtiTypes = Object.keys(mbtiColorPalette);
+  const mbtiColorS = Object.values(mbtiColorPalette);
   const mbtiColors = d3.scaleOrdinal()
-  .domain(["INTJ", "ESTP", "ENTJ", "ESFJ", "INFJ", "INFP", "ENFJ", "ISFJ", "ISTJ", "ENFP", "ENTP", "ESTJ", "ISTP", "ISFP", "INTP", "ESFP"])
-  .range(["#99B658", "#90E45E", "#B3E0AE", "#2BB17F", "#27CABD", "#147EA3", "#0D3C94", "#1E1285", '#672595', '#A97CB8', '#D7AFD9', '#E54E3B', '#DD7929', '#7B6865', "#FFDCAC", "#5F492A"]);
+  .domain(mbtiTypes)
+  .range(mbtiColorS);
+ 
   const renameMap = {
       // Example: 'CSV Name': 'GeoJSON Name',
       'Congo (Kinshasa)':"Dem. Rep. Congo",
