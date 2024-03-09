@@ -10,6 +10,7 @@
   let tooltipContent = '', tooltipX = 0, tooltipY = 0, showTooltip = false;
   let pieChartContainer;
   let showPie= false;
+  let rotationPaused = false;
 
   let searchCountry = ''; // Variables for search inputs
   let searchResult = ''; // For displaying search results on the page
@@ -19,6 +20,7 @@
   // Assuming you have a list of all Country names in your data
   let allCountries = []; // This will be populated with unique Country names
   let pieChartData;
+
 
   const mbtiColors = d3.scaleOrdinal()
   .domain(["INTJ", "ESTP", "ENTJ", "ESFJ", "INFJ", "INFP", "ENFJ", "ISFJ", "ISTJ", "ENFP", "ENTP", "ESTJ", "ISTP", "ISFP", "INTP", "ESFP"])
@@ -54,7 +56,7 @@
           return d3.autoType(d);
       });
     // Check the structure of parsed data
-    console.log(mbtiData);
+    
 
     const baseURL = location.hostname === 'localhost' ? '' : '/dsc106final';
 
@@ -103,8 +105,8 @@
       { type: 'ISTJ', value: data.ISTJ },
       { type: 'ISTP', value: data.ISTP },  
     ];
-    const width = 200;
-    const height = 200;
+    const width = 300;
+    const height = 300;
     const radius = Math.min(width, height) / 2;
     const arc = d3.arc()
       .outerRadius(radius - 10)
@@ -130,7 +132,7 @@
         .attr('d', arc)
         .attr('fill', d => mbtiColors(d.data.type));
       
-      pieChartContainer = svg.node();
+
 
   }
   function remove() {
@@ -149,6 +151,8 @@
       .append('svg')
       .attr('width', width)
       .attr('height', height)
+      .style('left', '100px')
+      .style('right', '100px')
       .call(d3.drag().on('start', dragStartHandler).on('drag', dragged).on('end', dragEndHandler))
   
 
@@ -183,15 +187,18 @@
        })
        .attr('stroke', 'white') // Add this line to set the stroke color
        .attr('stroke-width', 0.3)
-       .on('mouseover', (event, d) => {
+       .on('mouseover', (event, d) =>{
             // Display pie chart when the mouse is over the country
             const countryPieData = pieChartData.find(pd => pd.Country === d.properties.name);
             if (countryPieData) {
               showPieChart(countryPieData, event.pageX, event.pageY);
-              tooltipX = event.pageX;
-              tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
-              showPie = true;
+               // Adjust Y position to avoid cursor overlap
+              
             }
+            tooltipX = event.pageX;
+            tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
+            showPie = true;
+            rotationPaused = true;
         })
        .on('mousemove', (event, d) => {
          const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
@@ -201,11 +208,13 @@
          tooltipX = event.pageX;
          tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
          showTooltip = true;
+         rotationPaused = true;
        })
        .on('mouseleave', () => {
          showTooltip = false;
-         showPie = false;
-         remove()
+         remove();
+         rotationPaused = false;
+        
        });
     enableRotation();
     function enableRotation() {
@@ -216,7 +225,7 @@
       let lastTime = Date.now();
 
       rotationTimer = d3.timer(function () {
-        if (!dragging ) {
+        if (!dragging && !rotationPaused) {
           const now = Date.now();
           const delta = now - lastTime;
           lastTime = now;
@@ -235,6 +244,7 @@
       function dragStartHandler(event) {
         dragging = true;
         dragStart = projection.invert(d3.pointer(event));
+        rotationPaused = true;
       }
       function dragged(event) {
         if (dragging) {
@@ -249,6 +259,7 @@
       }
       function dragEndHandler() {
         dragging = false;
+        
       }
 
       svg.on('mousedown', (event) => {
@@ -357,6 +368,10 @@
   .tooltip.show {
     opacity: 1;
   }
+  .pieChart{
+    opacity: 0.7;
+  }
+  
 
   .search-container {
     position: relative;
@@ -446,7 +461,7 @@
   {tooltipContent}
 </div>
 
-<div class ="pieChart" style="top: {tooltipY}px; left: {tooltipX}px;"class:show="{showPie}">
+<div class="pieChart" style="top: {tooltipY}px; left: {tooltipY}px;" class:show="{showPie}">
   {pieChartContainer}
 </div>
 
