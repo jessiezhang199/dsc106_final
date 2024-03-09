@@ -116,31 +116,70 @@
     height: auto; /* maintain aspect ratio */
     border-radius: 10px; /* if you want rounded corners */
   }
+  .centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full height */
+  }
+
+  .quiz-container {
+    text-align: center; /* Center text */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    gap: 20px; /* Space between elements */
+  }
+
+  .choices-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center buttons horizontally */
+    gap: 10px; /* Space between buttons */
+  }
+
+  button {
+    padding: 10px 20px;
+    cursor: pointer;
+    /* Additional button styling here */
+  }
 </style>
 
+
 {#if !quizStarted && !showResults}
-  <div>
-    <h2>Select a Quiz Category</h2>
-    <!-- Replace the select and option HTML with buttons for each category -->
-    {#each Object.keys(categoryImages) as category (category)}
-      <button on:click={() => { selectedCategory = category; startQuiz(); }}>
-        {category}
-      </button>
-    {/each}
+  <div class="centered-container">
+    <!-- Category Selection Buttons -->
+    <div class="quiz-container">
+      <h2>Select a Quiz Category</h2>
+      {#each Object.keys(categoryImages) as category (category)}
+        <button on:click={() => { selectedCategory = category; startQuiz(); }}>
+          {category}
+        </button>
+      {/each}
+    </div>
   </div>
 {:else if quizStarted}
-  <div>
-    <img class="quiz-image" src={`${base}/mbti_images/quiz_data/${selectedCategory}/${imagesForQuiz[currentQuestionIndex]}`} alt="Character image">
-    {#each currentChoices as choice}
-      <button on:click={() => selectAnswer(choice)}>{choice}</button>
-    {/each}
-    {#if showFeedback}
-      <p>{feedbackMessage}</p>
-    {/if}
+  <div class="centered-container">
+    <!-- Quiz Question and Choices -->
+    <div class="quiz-container">
+      <img class="quiz-image" src={`${base}/mbti_images/quiz_data/${selectedCategory}/${imagesForQuiz[currentQuestionIndex]}`} alt="Character image">
+      <div class="choices-container">
+        {#each currentChoices as choice}
+          <button on:click={() => selectAnswer(choice)}>{choice}</button>
+        {/each}
+        {#if showFeedback}
+          <p>{feedbackMessage}</p>
+        {/if}
+      </div>
+    </div>
   </div>
 {:else if showResults}
-  <div>
-    <p>{resultsMessage}</p>
-    <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
+  <div class="centered-container">
+    <!-- Quiz Results -->
+    <div class="quiz-container">
+      <p>{resultsMessage}</p>
+      <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
+    </div>
   </div>
 {/if}
