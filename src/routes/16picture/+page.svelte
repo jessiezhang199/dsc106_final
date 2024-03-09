@@ -171,11 +171,8 @@
       .style('font-size', '10px')
       .attr('text-anchor', 'middle');
   }
-  let imageUrl = `${base}/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; 
-
-  $: imageUrl = `${base}/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; 
   $: selectedMBTI = `${EI}${NS}${FT}${PJ}`;
-  $: imageUrl = `${base}/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; 
+
 
   function drawChart() {
     d3.select("#chart").select("svg").remove();
@@ -235,7 +232,7 @@
 
   let audio;
   let isPlaying = false;
-  $: audioSource = `${base}/music/${selectedMBTI}.mp3`;
+
   $: {
     if (audio) {
       audio.pause();
@@ -273,7 +270,7 @@
   role="button"
   aria-pressed={isPlaying.toString()}
 >
-  <audio bind:this={audio} src={audioSource}></audio>
+  <audio bind:this={audio} src="{base}/music/{selectedMBTI}.mp3"></audio>
   <button on:click={handleButtonClick}>Play Music</button>
 </div>
 
@@ -364,7 +361,8 @@
 
 <div class="container">
   <div>
-    <img class="mbti-image" src={imageUrl} alt={selectedMBTI}>
+    <img class="mbti-image" 
+    src="{base}/mbti_images/{selectedMBTI.toLowerCase()}.jpg" alt={selectedMBTI}>
   </div>
   <div id="radarChart"></div>
 </div>
