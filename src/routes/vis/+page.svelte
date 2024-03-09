@@ -8,17 +8,21 @@
   let mbtiData = [], mapData;
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
   let tooltipContent = '', tooltipX = 0, tooltipY = 0, showTooltip = false;
+  let pieChartContainer;
+  let showPie= false;
+
   let searchCountry = ''; // Variables for search inputs
   let searchResult = ''; // For displaying search results on the page
   let CountrySuggestions = [];
+  
 
   // Assuming you have a list of all Country names in your data
   let allCountries = []; // This will be populated with unique Country names
-  
+  let pieChartData;
+
   const mbtiColors = d3.scaleOrdinal()
   .domain(["INTJ", "ESTP", "ENTJ", "ESFJ", "INFJ", "INFP", "ENFJ", "ISFJ", "ISTJ", "ENFP", "ENTP", "ESTJ", "ISTP", "ISFP", "INTP", "ESFP"])
   .range(["#99B658", "#90E45E", "#B3E0AE", "#2BB17F", "#27CABD", "#147EA3", "#0D3C94", "#1E1285", '#672595', '#A97CB8', '#D7AFD9', '#E54E3B', '#DD7929', '#7B6865', "#FFDCAC", "#5F492A"]);
-
   const renameMap = {
       // Example: 'CSV Name': 'GeoJSON Name',
       'Congo (Kinshasa)':"Dem. Rep. Congo",
@@ -32,6 +36,16 @@
   onMount(async () => {
     const mbtiRes = await fetch('mbti_clean.csv');
     const csvText = await mbtiRes.text();
+    const pieChartRes = await fetch('mbti_all_type_clean.csv');
+    const pieChartText = await pieChartRes.text();
+   
+    pieChartData = d3.csvParse(pieChartText, d => {
+          // Use the rename map to correct Country names
+          if (renameMap[d.Country]) {
+          d.Country = renameMap[d.Country];
+          }
+          return d3.autoType(d);
+      });
     mbtiData = d3.csvParse(csvText, d => {
           // Use the rename map to correct Country names
           if (renameMap[d.Country]) {
@@ -69,6 +83,60 @@
   } else {
     CountrySuggestions = [];
   }
+  function showPieChart(data,mouseX, mouseY) {
+    d3.select('.pieChart').html('');
+    let pieData = [
+      { type: 'ENFJ', value: data.ENFJ },
+      { type: 'ENFP', value: data.ENFP},
+      { type: 'ENTJ', value: data.ENTJ },
+      { type: 'ENTP', value: data.ENTP },
+      { type: 'ESFJ', value: data.ESFJ },
+      { type: 'ESFP', value: data.ESFP },
+      { type: 'ESTJ', value: data.ESTJ },
+      { type: 'ESTP', value: data.ESTP },
+      { type: 'INFJ', value: data.INFJ },
+      { type: 'INFP', value: data.INFP },
+      { type: 'INTJ', value: data.INTJ },
+      { type: 'INTP', value: data.INTP },
+      { type: 'ISFJ', value: data.ISFJ },
+      { type: 'ISFP', value: data.ISFP },
+      { type: 'ISTJ', value: data.ISTJ },
+      { type: 'ISTP', value: data.ISTP },  
+    ];
+    const width = 200;
+    const height = 200;
+    const radius = Math.min(width, height) / 2;
+    const arc = d3.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(0);
+
+    const pie = d3.pie()
+      .value(d => d.value);
+    const svg = d3.select('.pieChart')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .style('position', 'absolute') // Position the pie chart absolutely
+      .style('left', `${mouseX}px`) // Set the left position based on mouse X coordinate
+      .style('top', `${mouseY}px`)
+      .append('g')
+      .attr('transform', `translate(${width / 2},${height / 2})`);
+      const arcs = svg.selectAll('arc')
+        .data(pie(pieData))
+        .enter()
+        .append('g')
+        .attr('class', 'arc');
+      arcs.append('path')
+        .attr('d', arc)
+        .attr('fill', d => mbtiColors(d.data.type));
+      
+      pieChartContainer = svg.node();
+
+  }
+  function remove() {
+    d3.select('.pieChart').html('');
+  }
+  
   
 
   function drawMap() {
@@ -115,6 +183,16 @@
        })
        .attr('stroke', 'white') // Add this line to set the stroke color
        .attr('stroke-width', 0.3)
+       .on('mouseover', (event, d) => {
+            // Display pie chart when the mouse is over the country
+            const countryPieData = pieChartData.find(pd => pd.Country === d.properties.name);
+            if (countryPieData) {
+              showPieChart(countryPieData, event.pageX, event.pageY);
+              tooltipX = event.pageX;
+              tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
+              showPie = true;
+            }
+        })
        .on('mousemove', (event, d) => {
          const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
          tooltipContent = CountryData ?
@@ -126,6 +204,8 @@
        })
        .on('mouseleave', () => {
          showTooltip = false;
+         showPie = false;
+         remove()
        });
     enableRotation();
     function enableRotation() {
@@ -225,6 +305,7 @@
  function selectCountry(Country) {
   searchCountry = Country; // Update the search input with the selected Country
   CountrySuggestions = []; // Clear suggestions
+  
   }
 
   function resetSearch() {
@@ -361,7 +442,12 @@
 
 <svg id="map"></svg>
 <div class="tooltip" style="top: {tooltipY}px; left: {tooltipX}px;" class:show="{showTooltip}">
+  
   {tooltipContent}
+</div>
+
+<div class ="pieChart" style="top: {tooltipY}px; left: {tooltipX}px;"class:show="{showPie}">
+  {pieChartContainer}
 </div>
 
 <div class="legend-container">
