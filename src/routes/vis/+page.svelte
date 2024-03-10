@@ -438,6 +438,7 @@
   .autocomplete-suggestions li {
     padding: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   .autocomplete-suggestions li:hover {
     background-color: #88caf0a1;
@@ -476,7 +477,7 @@
     opacity: 0.9;
   }
   .learn button:hover {
-    background-color: #0ccced;
+    background-color: #0cb1ed;
   }
   button {
     padding: 4px 4px;
@@ -488,6 +489,9 @@
     transition: background-color 0.3s ease;
     font-size: 14px;
     opacity: 0.9;
+  }
+  button:hover{
+    background-color: #88caf0a1;
   }
   
   .text p {
