@@ -64,6 +64,8 @@
     document.body.style.backgroundImage = `url(${base}/page3/sky-image.jpg)`;
     document.body.style.backgroundSize = 'cover'; // Adjust as needed
     document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+   
 
     const mbtiRes = await fetch('mbti_clean.csv');
     const csvText = await mbtiRes.text();
