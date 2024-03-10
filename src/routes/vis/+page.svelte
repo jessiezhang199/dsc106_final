@@ -241,7 +241,7 @@
     .attr('cx', width / 2)
     .attr('cy', height / 2)
     .attr('r', projection.scale())
-    .attr('fill', '#1E90FF');
+    .attr('fill', '#44c4f2');
 
     const graticule = d3.geoGraticule()
       .step([20, 20]);
@@ -425,6 +425,9 @@
   text-align: center; /* Centers the title text */
   color: white;
   }
+  p {
+    color: white;
+  }
   #map {
     width: 80%; /* Adjust the width as needed */
     min-height: 700px; /* Adjust the height as needed */
@@ -501,7 +504,7 @@
 
   .legend-item span {
     font-size: 14px;
-    color: blue;
+    color: white;
   }
 
 </style>
@@ -563,7 +566,7 @@
     <span>No Data</span>
   </div>
 </div>
-<p style="position: absolute; top: 700px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">MBTI-TYPES Data</a></p>
+<p style="position: absolute; top: 700px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank" color ='white'>MBTI-TYPES Data</a></p>
 <div style="position: absolute; top: 720px; left: 20px;">
   <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
 </div>
