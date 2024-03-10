@@ -296,14 +296,32 @@
 <style>
   .music-container {
     position: absolute;
-    right: 10px; /* Distance from the left edge */
+    left: 10px; /* Distance from the right edge */
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Adjust to center based on its height */
-    background: #f8f8f8; /* Background color */
+    background: hsl(43, 59%, 88%); /* Background color */
     padding: 10px; /* Padding around content */
-    border-radius: 10px; /* Rounded corners */
+    width: 80px; /* Specify width */
+    height: 80px; /* Specify height to match width to form a circle */
+    border-radius: 50%; /* Rounded corners to form a circle */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-  }
+    display: flex; /* Ensures the content is centered */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+}
+
+.music-container button {
+    width: 75px; /* Specify the width */
+    height: 75px; /* Specify the height to match the width */
+    border-radius: 50%; /* Rounded corners to form a circle */
+    border: none; /* Remove default border */
+    background-color: hsl(46, 57%, 95%); /* Background color of the button */
+    color: #333; /* Text color */
+    display: flex; /* Enables flexbox for centering content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
   .container {
     display: flex;
     align-items: flex-start; /* Align items vertically in the center */
@@ -323,13 +341,13 @@
   }
   #chart-container {
     text-align: center; /* Center the chart container */
-    margin-top: 140px; /* Space from the top elements */
+    margin-top: 30px; /* Space from the top elements */
   }
 
   select {
   border-radius: 20px; /* Gives the dropdown rounded corners */
-  padding: 5px 10px; /* Adds some padding inside the dropdown */
-  background-color: #ede9e6; /* Sets a light grey background color */
+  padding: 10px 15px; /* Increased padding for a larger appearance */
+  background-color: hsl(46, 57%, 95%); /* Sets a light grey background color */
   color: #333; /* Sets the text color */
   border: 3px solid #ccc; /* Adds a light grey border */
   outline: none; /* Removes the default focus outline */
@@ -337,35 +355,47 @@
   -webkit-appearance: none; /* Removes default styling for Webkit browsers */
   -moz-appearance: none; /* Removes default styling for Mozilla browsers */
   appearance: none; /* Removes default styling */
+  font-size: 18px; /* Increases the font size for better readability */
+}
+
+.mbti-selectors {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 50px; /* Adds some space between each select element */
 }
 
 
-  .mbti-selectors::after {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    color: #333;
-    pointer-events: none; /* Ensures clicks on the arrow don't interfere with the select functionality */
-  }
-  .mbti-selectors {
-      margin-top: 20px; 
-      display: flex;
-      justify-content: center;
-      gap: 50px; /* Adds some space between each select element */
-    }
-
   #mbti-text {
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Sans MS', cursive;
     color: #333;
     margin-top: 30px;
     padding: 10px;
-    background-color: #f8f8f8;
+    background-color: hsl(46, 57%, 95%);
     border-radius: 10px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
     width: 800px;
     margin-left: auto; 
     margin-right: auto;
   }
+
+  #chart-container select, #chart-container button {
+  border-radius: 10px; /* Slightly less rounded corners compared to the MBTI selectors */
+  padding: 5px 15px; /* Less padding for a smaller appearance */
+  background-color: hsl(46, 57%, 95%); /* Sets a light grey background color */
+  color: #333; /* Sets the text color */
+  border: 3px solid #ccc; /* Thinner border compared to the MBTI selectors */
+  outline: none; /* Removes the default focus outline */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+  font-size: 16px; /* Smaller font size for the text */
+  margin-right: 10px; /* Adds space between the select and the button */
+}
+
+#chart-container {
+  margin-top: 20px;
+  text-align: center; /* Centers the content inside the container */
+}
+
 
   #tips1-container {
     position: absolute;
@@ -385,33 +415,23 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
     background-color: hsl(43, 59%, 88%);
     width: 150px;
-    right:10px;
-    top: 200px;
+    left:10px;
+    top: 500px;
     font-size: 12px;
     text-align: center;
   }
-  footer {
-  position: absolute;
-  bottom: -600px;
-  width: 100%;
-  text-align: center;
-  padding: 10px;
-  background-color: #f3f3f3; /* Or any color that fits your design */
-}
 
-footer p {
-  margin: 0;
-  font-size: 14px;
-}
-
-footer a {
-  color: #0645AD; /* Or any color that fits your design */
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
+  #tips3-container {
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    background-color: hsl(43, 59%, 88%);
+    width: 200px;
+    right:200px;
+    bottom: 50px;
+    font-size: 12px;
+    text-align: center;
+  }
 </style>
 
 <!-- MBTI Type Selection Dropdown -->
@@ -458,17 +478,18 @@ footer a:hover {
 
 <div id="tips2-container">
   <p>
-    Tips: Click the button below to play music! (Click again to pause)
+    Tips: Click the button above to play music! (Click again to pause)
   </p>
 </div>
+
 
 <p style="position: absolute; top: 320px; left: 420px; font-size: 16px; max-width: 200px;">
   What kind of music they love to listen?
 </p>
-<p style="position: absolute; top: 650px; left: 750px; font-size: 16px; max-width: 500px;">
+<p style="position: absolute; top: 400px; right:30px; font-family: 'Comic Sans MS', cursive; font-size: 16px; max-width: 260px;">
   To explore what kind of music might be favored by {selectedMBTI}  personality types based on Spotify audio quality features, we can consider the following interpretation of each feature: 'danceability', 'valence', 'energy', 'loudness', 'acousticness', 'instrumentalness', 'liveness'.
 </p>
-<p style="position: absolute; top: 900px; left: 50px; font-size: 16px; max-width: 250px;">
+<p style="position: absolute; top: 900px; left: 50px; font-family: 'Comic Sans MS', cursive; font-size: 16px; max-width: 250px;">
   Fun fact:
   Extroverts tend to gravitate towards energetic types of music, especially dance music and loud music. This tendency is particularly evident in ESFPs and ESTPs!
 </p>
@@ -503,12 +524,17 @@ footer a:hover {
     <button on:click={() => goto(`${base}/vis`)}>Learn more</button>
 </div>
 
+<div id="tips3-container">
+  <p>
+    Tip: Click the button to toggle the chart's features, allowing you to sort or unsort the bar chart. Scroll down to view the chart!
+  </p>
+</div>
 
-<footer>
+<div style="display: flex; justify-content: space-between;">
   <p>
     Data Source: <a href="https://www.kaggle.com/datasets/xtrnglc/spotify-mbti-playlists" target="_blank">Spotify MBTI Playlist Analysis</a>
   </p>
   <p>
     Image Source: <a href="https://www.xiaohongshu.com/user/profile/6033ab1800000000010075ac?xhsshare=CopyLink&appuid=5c4e9b04000000001203ea7e&apptime=1709362317" target="_blank">xiaohongshu</a>
   </p>
-</footer>
+</div>
