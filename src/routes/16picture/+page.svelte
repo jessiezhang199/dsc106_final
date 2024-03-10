@@ -295,7 +295,7 @@
 
 <style>
   .music-container {
-    position: fixed; 
+    position: absolute;
     right: 10px; /* Distance from the left edge */
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Adjust to center based on its height */
