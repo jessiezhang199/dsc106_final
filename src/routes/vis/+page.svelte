@@ -190,7 +190,8 @@
     .attr('cx', width / 2)
     .attr('cy', height / 2)
     .attr('r', projection.scale())
-    .attr('fill', '#44c4f2');
+    .attr('fill', '#44c4f2')
+    .attr('opacity', 0.9);
 
     const graticule = d3.geoGraticule()
       .step([20, 20]);
@@ -213,6 +214,7 @@
         const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
         return CountryData ? mbtiColors(CountryData.MBTI_type) : '#DED3D1';
        })
+       .attr('opacity', 0.9)
        .attr('stroke', 'white') // Add this line to set the stroke color
        .attr('stroke-width', 0.3)
        .on('mousemove', (event, d) =>{
@@ -368,6 +370,8 @@
   h1 {
   text-align: center; /* Centers the title text */
   color: white;
+  font-family:'Great Vibes', cursive;
+  font-size: 40px;
   }
   p {
     color: white;
@@ -450,10 +454,39 @@
     font-size: 14px;
     color: white;
   }
+  .learn button {
+    padding: 12px 24px;
+    cursor: pointer;
+    background-color: #0ccced;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    opacity: 0.9;
+  }
+  .learn button:hover {
+    background-color: #0ccced;
+  }
+  button {
+    padding: 4px 4px;
+    cursor: pointer;
+    background-color: #0ccced;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  button:hover {
+    background-color: #0ccced;
+  }
 
 </style>
 
 <h1>Which MBTI Type is Most Common in Your Country?</h1>
+
 <p style="position: absolute; top: 250px; left: 20px; font-size: 16px; max-width: 150px;">
   In many countries, INFP types count for the majority.
 </p>
@@ -461,13 +494,13 @@
 <p style="position: absolute; top: 400px; left: 20px; font-size: 16px; max-width: 150px;">
   According to our data, there is accually only 5 MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ)
 </p>
-<p style="position: absolute; top: 110px; left: 10px; font-size: 18px; max-width: 400px;">
+<p style="position: absolute; top: 140px; left: 10px; font-size: 18px; max-width: 400px;">
   Search the country you want to learn more.
 </p>
-<p style="position: absolute; top: 110px; left: 700px; font-size: 16px; max-width: 300px;">
+<p style="position: absolute; top: 140px; left: 700px; font-size: 16px; max-width: 300px;">
   Try to rotate the map by mouse or place the mouse over the country you like, what do you see?
 </p>
-<p style="position: absolute; top: 200px; left: 850px; font-size: 16px; max-width: 180px;">
+<p style="position: absolute; top: 230px; left: 850px; font-size: 16px; max-width: 180px;">
   Fun fact: Do you know that the most common type of mbti for American is Introversion instead of Extraversion? (Surprise!)
 </p>
 
@@ -478,7 +511,7 @@
   on:keydown={handleKeydown}>
 
 <button on:click={searchData}>Search</button>
-  <button on:click={resetSearch}>Reset</button> <!-- Add this line for the Reset button -->
+<button on:click={resetSearch}>Reset</button> <!-- Add this line for the Reset button -->
   {#if CountrySuggestions.length > 0}
   <ul class="autocomplete-suggestions">
     {#each CountrySuggestions as suggestion}
@@ -519,7 +552,8 @@
     <span>No Data</span>
   </div>
 </div>
-<p style="position: absolute; top: 700px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank" color ='white'>MBTI-TYPES Data</a></p>
-<div style="position: absolute; top: 720px; left: 20px;">
+<p style="position: absolute; top: 800px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank" color ='white'>MBTI-TYPES Data</a></p>
+
+<div class="learn" style="position: absolute; top: 800px; left: 20px;">
   <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
 </div>
