@@ -61,7 +61,7 @@
     plotlyScript.src = 'https://cdn.plot.ly/plotly-latest.min.js';
     plotlyScript.async = true;
     document.head.appendChild(plotlyScript);
-    document.body.style.backgroundImage = `url(${base}/page3/sky-image.jpg)`;
+    document.body.style.backgroundImage = `url(${base}/page3/sky2.jpg)`;
     document.body.style.backgroundSize = 'cover'; // Adjust as needed
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundAttachment = 'fixed';
