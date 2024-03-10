@@ -96,7 +96,7 @@
     // After fetching and processing your data, populate allCountries
     allCountries = Array.from(new Set(mbtiData.map(d => d.Country))).sort();
   });
-  
+
   onDestroy(() => {
     // Cleanup that also needs to run in the browser
     if (typeof document !== 'undefined') {
@@ -121,56 +121,6 @@
   } else {
     CountrySuggestions = [];
   }
-  // function showPieChart(data,mouseX, mouseY) {
-  //   d3.select('.pieChart').html('');
-  //   let pieData = [
-  //     { type: 'ENFJ', value: data.ENFJ },
-  //     { type: 'ENFP', value: data.ENFP},
-  //     { type: 'ENTJ', value: data.ENTJ },
-  //     { type: 'ENTP', value: data.ENTP },
-  //     { type: 'ESFJ', value: data.ESFJ },
-  //     { type: 'ESFP', value: data.ESFP },
-  //     { type: 'ESTJ', value: data.ESTJ },
-  //     { type: 'ESTP', value: data.ESTP },
-  //     { type: 'INFJ', value: data.INFJ },
-  //     { type: 'INFP', value: data.INFP },
-  //     { type: 'INTJ', value: data.INTJ },
-  //     { type: 'INTP', value: data.INTP },
-  //     { type: 'ISFJ', value: data.ISFJ },
-  //     { type: 'ISFP', value: data.ISFP },
-  //     { type: 'ISTJ', value: data.ISTJ },
-  //     { type: 'ISTP', value: data.ISTP },  
-  //   ];
-  //   const width = 300;
-  //   const height = 300;
-  //   const radius = Math.min(width, height) / 2;
-  //   const arc = d3.arc()
-  //     .outerRadius(radius - 10)
-  //     .innerRadius(0);
-
-  //   const pie = d3.pie()
-  //     .value(d => d.value);
-  //   const svg = d3.select('.pieChart')
-  //     .append('svg')
-  //     .attr('width', width)
-  //     .attr('height', height)
-  //     .style('position', 'absolute') // Position the pie chart absolutely
-  //     .style('left', `${mouseX}px`) // Set the left position based on mouse X coordinate
-  //     .style('top', `${mouseY}px`)
-  //     .append('g')
-  //     .attr('transform', `translate(${width / 2},${height / 2})`);
-  //     const arcs = svg.selectAll('arc')
-  //       .data(pie(pieData))
-  //       .enter()
-  //       .append('g')
-  //       .attr('class', 'arc');
-  //     arcs.append('path')
-  //       .attr('d', arc)
-  //       .attr('fill', d => mbtiColors(d.data.type));
-      
-
-
-  // }
 
   function showPieChart(data, mouseX, mouseY) {
     if (!pieChartContainer) {
@@ -179,16 +129,6 @@
     pieChartContainer.id = 'pieChartContainer';
     document.body.appendChild(pieChartContainer);
   }
-    // const plotData = [{
-    //   values: [data.ENFJ, data.ENFP, data.ENTJ, data.ENTP, data.ESFJ, data.ESFP, data.ESTJ, data.ESTP, data.INFJ, data.INFP, data.INTJ, data.INTP, data.ISFJ, data.ISFP, data.ISTJ, data.ISTP],
-    //   labels: ["ENFJ", "ENFP", "ENTJ", "ENTP", "ESFJ", "ESFP", "ESTJ", "ESTP", "INFJ", "INFP", "INTJ", "INTP", "ISFJ", "ISFP", "ISTJ", "ISTP"],
-    //   type: 'pie',
-    //   marker: {
-    //   colors: mbtiColors.range()
-    // },
-    // textinfo: 'label+percent', // Include labels and percentages in the hover info
-    // hoverinfo: 'label+percent'
-    // }];
     const mbtiTypes = ["ENFJ", "ENFP", "ENTJ", "ENTP", "ESFJ", "ESFP", "ESTJ", "ESTP", "INFJ", "INFP", "INTJ", "INTP", "ISFJ", "ISFP", "ISTJ", "ISTP"]
     const plotData = [{
       values: mbtiTypes.map(type => data[type]),
@@ -290,16 +230,6 @@
             
             rotationPaused = true;
         })
-      //  .on('mousemove', (event, d) => {
-      //    const CountryData = mbtiData.find(cd => cd.Country === d.properties.name);
-      //    tooltipContent = CountryData ?
-      //              `${d.properties.name} ${CountryData.MBTI_type}: ${CountryData.Percentage} (Percentage of All Population)` :
-      //              `${d.properties.name}: No data`; // Include Country name before "No data"
-      //    tooltipX = event.pageX;
-      //    tooltipY = event.pageY - 28; // Adjust Y position to avoid cursor overlap
-      //    showTooltip = true;
-      //    rotationPaused = true;
-      //  })
        .on('mouseleave', () => {
          showTooltip = false;
          removePieChartAfterDelay();
