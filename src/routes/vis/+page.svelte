@@ -40,6 +40,9 @@
     plotlyScript.src = 'https://cdn.plot.ly/plotly-latest.min.js';
     plotlyScript.async = true;
     document.head.appendChild(plotlyScript);
+    document.body.style.backgroundImage = `url(${base}/page3/sky-image.jpg)`;
+    document.body.style.backgroundSize = 'cover'; // Adjust as needed
+    document.body.style.backgroundRepeat = 'no-repeat';
 
     const mbtiRes = await fetch('mbti_clean.csv');
     const csvText = await mbtiRes.text();
@@ -396,8 +399,10 @@
 </script>
 
 <style>
+  
   h1 {
   text-align: center; /* Centers the title text */
+  color: white;
   }
   #map {
     width: 80%; /* Adjust the width as needed */
@@ -475,6 +480,7 @@
 
   .legend-item span {
     font-size: 14px;
+    color: blue;
   }
 
 </style>
