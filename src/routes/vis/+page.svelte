@@ -96,7 +96,7 @@
     // After fetching and processing your data, populate allCountries
     allCountries = Array.from(new Set(mbtiData.map(d => d.Country))).sort();
   });
-
+  
   onDestroy(() => {
     // Cleanup that also needs to run in the browser
     if (typeof document !== 'undefined') {
@@ -518,12 +518,6 @@
     font-size: 14px;
     color: white;
   }
-  .textBox {
-    position: absolute;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
 
 </style>
 
@@ -531,11 +525,10 @@
 <p style="position: absolute; top: 250px; left: 20px; font-size: 16px; max-width: 150px;">
   In many countries, INFP types count for the majority.
 </p>
-<div class="textBox">
+
 <p style="position: absolute; top: 400px; left: 20px; font-size: 16px; max-width: 150px;">
   According to our data, there is accually only 5 MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ)
 </p>
-</div>
 <p style="position: absolute; top: 110px; left: 10px; font-size: 18px; max-width: 400px;">
   Search the country you want to learn more.
 </p>
