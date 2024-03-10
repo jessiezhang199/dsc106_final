@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import * as d3 from 'd3';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
@@ -74,6 +74,12 @@
     mbtiTypes = Array.from(new Set(data.map(d => d.mbti)));
     drawRadarChart();
     drawChart();
+  });
+
+  onDestroy(() => {
+    // Reset the background when navigating away from the page
+    document.body.style.backgroundImage = ''; // This removes the background image
+    // If you have a default background you'd like to revert to, you can set it here instead of an empty string
   });
 
   function toggleSort() {
