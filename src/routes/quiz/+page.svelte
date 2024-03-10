@@ -291,7 +291,11 @@ p {
       <img src={`${base}/mbti_images/quiz_data/cheatsheet.jpg`} 
        alt="MBTI Cheat Sheet" 
        class="cheatsheet" 
-       style="position: absolute; right: 5%; top: 20%;">
+       style="position: absolute; left: 5%; top: 20%;">
+       <img src={`${base}/mbti_images/quiz_data/thinking.webp`} 
+       alt="MBTI Cheat Sheet" 
+       class="cheatsheet" 
+       style="position: absolute; right: 5%; top: 50%;">
     </div>
   </div>
 {:else if showResults}
