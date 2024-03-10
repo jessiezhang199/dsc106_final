@@ -233,7 +233,7 @@ p {
   }
   footer {
     position: absolute;
-    bottom: -20px;
+    bottom: -60px;
     width: 100%;
     text-align: center;
     padding: 10px;
@@ -254,6 +254,11 @@ p {
     text-decoration: underline;
   }
   
+  .cheatsheet {
+  max-width: 200px; /* Adjust as needed */
+  max-height: 100%; /* Adjust as needed */
+  /* additional styling as needed */
+}
 </style>
 
 
@@ -272,7 +277,7 @@ p {
 {:else if quizStarted}
   <div class="centered-container">
     <div class="quiz-container">
-      <h2>{characterName}</h2> <!-- Character name displayed here -->
+      <h2>{characterName}</h2>
       <img class="quiz-image" src={`${base}/mbti_images/quiz_data/${selectedCategory}/${imagesForQuiz[currentQuestionIndex]}`} alt="Character image" />
       <div class="choices-container">
         {#each currentChoices as choice}
@@ -282,6 +287,11 @@ p {
       {#if showFeedback}
       <p in:fade={{ duration: 500 }}>{feedbackMessage}</p>
       {/if}
+      <!-- Cheatsheet image addition for when the quiz is ongoing -->
+      <img src={`${base}/mbti_images/quiz_data/cheatsheet.jpg`} 
+       alt="MBTI Cheat Sheet" 
+       class="cheatsheet" 
+       style="position: absolute; right: 5%; top: 20%;">
     </div>
   </div>
 {:else if showResults}
@@ -295,3 +305,4 @@ p {
     </div>
   </div>
 {/if}
+
