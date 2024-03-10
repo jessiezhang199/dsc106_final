@@ -150,6 +150,10 @@ section:nth-child(4) .text-container p:first-child {
 section:nth-child(4) .text-container {
   animation: fadeIn 1.5s ease-out;
 }
+.capybara-image {
+  width: 100px; /* Adjust the width as necessary */
+  height: auto; /* Maintain the aspect ratio */
+}
 
 
 </style>
@@ -192,6 +196,8 @@ section:nth-child(4) .text-container {
 
   <!-- Button Container -->
   <div class="button-container">
+    <img src="{base}/mbti_images/first_page_data/capybara.jpg" alt="Capybara" class="capybara-image">
     <button on:click={() => goto(`${base}/16picture`)}>Take a deep dive into the MBTI world!</button>
   </div>
+  
 </div>

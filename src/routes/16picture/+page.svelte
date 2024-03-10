@@ -432,6 +432,28 @@
     font-size: 12px;
     text-align: center;
   }
+  footer {
+  position: absolute;
+  bottom: -600px;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: #f3f3f3; /* Or any color that fits your design */
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+footer a {
+  color: #0645AD; /* Or any color that fits your design */
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
 </style>
 
 <!-- MBTI Type Selection Dropdown -->
@@ -530,11 +552,11 @@
   </p>
 </div>
 
-<div style="display: flex; justify-content: space-between;">
+<footer>
   <p>
     Data Source: <a href="https://www.kaggle.com/datasets/xtrnglc/spotify-mbti-playlists" target="_blank">Spotify MBTI Playlist Analysis</a>
   </p>
   <p>
     Image Source: <a href="https://www.xiaohongshu.com/user/profile/6033ab1800000000010075ac?xhsshare=CopyLink&appuid=5c4e9b04000000001203ea7e&apptime=1709362317" target="_blank">xiaohongshu</a>
   </p>
-</div>
+</footer>
