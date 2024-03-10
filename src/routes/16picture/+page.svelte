@@ -25,6 +25,25 @@
     'ESTJ': '#80bcc8'
   };
 
+  const mbtiTexts = {
+  'INTJ': 'An Architect (INTJ) is a person with the Introverted, Intuitive, Thinking, and Judging personality traits. These thoughtful tacticians love perfecting the details of life, applying creativity and rationality to everything they do. Their inner world is often a private, complex one.',
+  'INTP': 'A Logician (INTP) is someone with the Introverted, Intuitive, Thinking, and Prospecting personality traits. These flexible thinkers enjoy taking an unconventional approach to many aspects of life. They often seek out unlikely paths, mixing willingness to experiment with personal creativity.',
+  'ENTJ': 'A Commander (ENTJ) is someone with the Extraverted, Intuitive, Thinking, and Judging personality traits. They are decisive people who love momentum and accomplishment. They gather information to construct their creative visions but rarely hesitate for long before acting on them.',
+  'ENTP': 'A Debater (ENTP) is a person with the Extraverted, Intuitive, Thinking, and Prospecting personality traits. They tend to be bold and creative, deconstructing and rebuilding ideas with great mental agility. They pursue their goals vigorously despite any resistance they might encounter.',
+  'INFJ': 'An Advocate (INFJ) is someone with the Introverted, Intuitive, Feeling, and Judging personality traits. They tend to approach life with deep thoughtfulness and imagination. Their inner vision, personal values, and a quiet, principled version of humanism guide them in all things.',
+  'INFP': 'A Mediator (INFP) is someone who possesses the Introverted, Intuitive, Feeling, and Prospecting personality traits. These rare personality types tend to be quiet, open-minded, and imaginative, and they apply a caring and creative approach to everything they do.',
+  'ENFJ': 'A Protagonist (ENFJ) is a person with the Extraverted, Intuitive, Feeling, and Judging personality traits. These warm, forthright types love helping others, and they tend to have strong ideas and values. They back their perspective with the creative energy to achieve their goals.',
+  'ENFP': 'A Campaigner (ENFP) is someone with the Extraverted, Intuitive, Feeling, and Prospecting personality traits. These people tend to embrace big ideas and actions that reflect their sense of hope and goodwill toward others. Their vibrant energy can flow in many directions.',
+  'ISTJ': 'A Logistician (ISTJ) is someone with the Introverted, Observant, Thinking, and Judging personality traits. These people tend to be reserved yet willful, with a rational outlook on life. They compose their actions carefully and carry them out with methodical purpose.',
+  'ISFJ': 'A Defender (ISFJ) is someone with the Introverted, Observant, Feeling, and Judging personality traits. These people tend to be warm and unassuming in their own steady way. They’re efficient and responsible, giving careful attention to practical details in their daily lives.',
+  'ESTJ': 'An Executive (ESTJ) is someone with the Extraverted, Observant, Thinking, and Judging personality traits. They possess great fortitude, emphatically following their own sensible judgment. They often serve as a stabilizing force among others, able to offer solid direction amid adversity.',
+  'ESFJ': 'A Consul (ESFJ) is a person with the Extraverted, Observant, Feeling, and Judging personality traits. They are attentive and people-focused, and they enjoy taking part in their social community. Their achievements are guided by decisive values, and they willingly offer guidance to others.',
+  'ISTP':'A Virtuoso (ISTP) is someone with the Introverted, Observant, Thinking, and Prospecting personality traits. They tend to have an individualistic mindset, pursuing goals without needing much external connection. They engage in life with inquisitiveness and personal skill, varying their approach as needed.',
+  'ISFP':'An Adventurer (ISFP) is a person with the Introverted, Observant, Feeling, and Prospecting personality traits. They tend to have open minds, approaching life, new experiences, and people with grounded warmth. Their ability to stay in the moment helps them uncover exciting potentials.',
+  'ESTP':'An Entrepreneur (ESTP) is someone with the Extraverted, Observant, Thinking, and Prospecting personality traits. They tend to be energetic and action-oriented, deftly navigating whatever is in front of them. They love uncovering life’s opportunities, whether socializing with others or in more personal pursuits.',
+  'ESFP':'An Entertainer (ESFP) is a person with the Extraverted, Observant, Feeling, and Prospecting personality traits. These people love vibrant experiences, engaging in life eagerly and taking pleasure in discovering the unknown. They can be very social, often encouraging others into shared activities.'
+  };
+
   let data = [];
   let EI = 'E';
   let NS = 'N';
@@ -56,15 +75,24 @@
     drawChart();
   });
 
-
   function toggleSort() {
   isSorted = !isSorted;
-  drawChart(); // Redraw the chart with the new sort state
+  if (isSorted) {
+    // Sort data when isSorted is true
+    data.sort((a, b) => d3.descending(a[selectedColumn], b[selectedColumn]));
+  } else {
+    // Revert to the original order when isSorted is false
+    // Assuming you have a way to access the original data order, perhaps loading again or storing a copy
+    data = data.slice().sort((a, b) => mbtiTypes.indexOf(a.mbti) - mbtiTypes.indexOf(b.mbti));
   }
+  drawChart(); // Redraw the chart with the updated data order
+}
+
   function handleMBTIChange(event) {
     selectedMBTI = `${EI}${NS}${FT}${PJ}`;
     drawRadarChart();
   }
+  $: selectedMBTI = `${EI}${NS}${FT}${PJ}`;
 
   function drawRadarChart() {
     const radarWidth = 700;
@@ -170,8 +198,15 @@
       .text(d => d)
       .style('font-size', '10px')
       .attr('text-anchor', 'middle');
-  }
-  $: selectedMBTI = `${EI}${NS}${FT}${PJ}`;
+
+    svg.append('text')
+    .attr('class', 'chart-title')
+    .attr('x', 0)
+    .attr('y', -200) // Adjust position based on your preference
+    .attr('text-anchor', 'middle')
+    .style('font-size', '18px')
+    .text("Music Preference");
+    }
 
 
   function drawChart() {
@@ -197,11 +232,6 @@
     // Set the domain for the y-scale based on the selected column
     const domain = yDomains[selectedColumn] || yDomains['default'];
     y.domain(domain);
-    x.domain(data.map(d => d.mbti));
-
-    if (isSorted) {
-    data.sort((a, b) => d3.descending(a[selectedColumn], b[selectedColumn]));
-  }
     x.domain(data.map(d => d.mbti));
 
     // X-axis
@@ -292,7 +322,7 @@
   }
   #chart-container {
     text-align: center; /* Center the chart container */
-    margin-top: 100px; /* Space from the top elements */
+    margin-top: 140px; /* Space from the top elements */
   }
 
   select {
@@ -309,18 +339,55 @@
 }
 
 
-.mbti-selectors::after {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: #333;
-  pointer-events: none; /* Ensures clicks on the arrow don't interfere with the select functionality */
-}
-.mbti-selectors {
-    margin-top: 20px; 
-    display: flex;
-    justify-content: center;
-    gap: 50px; /* Adds some space between each select element */
+  .mbti-selectors::after {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #333;
+    pointer-events: none; /* Ensures clicks on the arrow don't interfere with the select functionality */
+  }
+  .mbti-selectors {
+      margin-top: 20px; 
+      display: flex;
+      justify-content: center;
+      gap: 50px; /* Adds some space between each select element */
+    }
+
+  #mbti-text {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    margin-left: auto; 
+    margin-right: auto;
+  }
+
+  #tips1-container {
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    background-color: hsl(43, 59%, 88%);
+    width: 200px;
+    height:50px;
+    left: 330px; 
+    top: 60px;
+    font-size: 12px;
+    text-align: center;
+  }
+  #tips2-container {
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    background-color: hsl(43, 59%, 88%);
+    width: 150px;
+    right:10px;
+    top: 200px;
+    font-size: 12px;
+    text-align: center;
   }
 </style>
 
@@ -347,6 +414,10 @@
   </select>
 </div>
 
+<div id="mbti-text">
+  <p>   {mbtiTexts[selectedMBTI]}</p>
+</div>
+
 <div class="container">
   <div>
     <img class="mbti-image" 
@@ -355,6 +426,29 @@
   <div id="radarChart"></div>
 </div>
 
+
+<div id="tips1-container">
+  <p>
+    Tips: Click the button to change MBTI types!
+  </p>
+</div>
+
+<div id="tips2-container">
+  <p>
+    Tips: Click the button below to play music! (Click again to pause)
+  </p>
+</div>
+
+<p style="position: absolute; top: 320px; left: 420px; font-size: 16px; max-width: 200px;">
+  What kind of music they love to listen?
+</p>
+<p style="position: absolute; top: 650px; left: 750px; font-size: 16px; max-width: 500px;">
+  To explore what kind of music might be favored by {selectedMBTI}  personality types based on Spotify audio quality features, we can consider the following interpretation of each feature: 'danceability', 'valence', 'energy', 'loudness', 'acousticness', 'instrumentalness', 'liveness'.
+</p>
+<p style="position: absolute; top: 900px; left: 50px; font-size: 16px; max-width: 250px;">
+  Fun fact:
+  Extroverts tend to gravitate towards energetic types of music, especially dance music and loud music. This tendency is particularly evident in ESFPs and ESTPs!
+</p>
 
 <div
   class="music-container"
@@ -378,6 +472,7 @@
   <button on:click={toggleSort}>
     {isSorted ? 'Unsort' : 'Sort'}
   </button>
+  <p style='font-size: 18px'>Overall Distribution of Music Types for 16 MBTIs</p>
   <div id="chart"></div>
 </div>
 
@@ -385,9 +480,10 @@
     <button on:click={() => goto(`${base}/vis`)}>Learn more</button>
 </div>
 
+
 <div style="display: flex; justify-content: space-between;">
   <p>
-    Data Source: <a href="https://www.kaggle.com/code/xtrnglc/spotify-mbti-playlist-analysis" target="_blank">Spotify MBTI Playlist Analysis</a>
+    Data Source: <a href="https://www.kaggle.com/datasets/xtrnglc/spotify-mbti-playlists" target="_blank">Spotify MBTI Playlist Analysis</a>
   </p>
   <p>
     Image Source: <a href="https://www.xiaohongshu.com/user/profile/6033ab1800000000010075ac?xhsshare=CopyLink&appuid=5c4e9b04000000001203ea7e&apptime=1709362317" target="_blank">xiaohongshu</a>
