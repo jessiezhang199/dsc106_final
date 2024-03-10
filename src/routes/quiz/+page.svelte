@@ -19,6 +19,7 @@
   let showFeedback = false;
   let showResults = false;
   let resultsMessage = '';
+  let feedbackImage = '';
 
   const allMBTITypes = ["INTJ", "ENTP", "INFP", "ENTJ", "ENFJ", "ISTJ", "ISFJ", "ESTP", "ESFP", "ENFP", "INTP", "ISTP", "ISFP", "ESTJ", "ESFJ", "INFJ"];
 
@@ -66,16 +67,18 @@
   function endQuiz() {
     quizStarted = false;
     showResults = true;
-    correctAnswers.subscribe(value => {
-      if (value === 4) {
-        resultsMessage = "Excellent, you are a master in MBTI!";
-      } else if (value >= 2) {
-        resultsMessage = "Great job, you know quite a bit!";
-      } else {
-        resultsMessage = "Looks like there's more to learn, try again!";
-      }
-      resultsMessage += ` You answered ${value} out of 4 correctly.`;
-    });
+    let score = $correctAnswers; // Ensure you use the $ prefix to get the value directly
+    if (score === 4) {
+      feedbackImage = `${base}/mbti_images/quiz_data/feedback/good.webp`;
+      resultsMessage = "Excellent, you are a master in MBTI!";
+    } else if (score >= 2) {
+      feedbackImage = `${base}/mbti_images/quiz_data/feedback/soso.webp`;
+      resultsMessage = "Great job, you know quite a bit!";
+    } else {
+      feedbackImage = `${base}/mbti_images/quiz_data/feedback/bad.webp`;
+      resultsMessage = "Looks like there's more to learn, try again!";
+    }
+    resultsMessage += ` You answered ${score} out of 4 correctly.`;
   }
 
   function restartQuiz() {
@@ -153,14 +156,26 @@
     width: 100%; /* Ensure the title spans the full width */
     text-align: center; /* Center the title */
   }
+  .feedback-image {
+    max-width: 50%; /* Adjust this value as needed */
+    max-height: 400px; /* Adjust this value as needed */
+    margin-bottom: 20px;
+  }
+  .category-image {
+    max-width: 50%; /* Adjust this value as needed */
+    max-height: 400px; /* Adjust this value as needed */
+    margin-bottom: 20px;
+  }
+  
 </style>
 
 
 {#if !quizStarted && !showResults}
   <div class="centered-container">
+    <img src={`${base}/mbti_images/quiz_data/quiz_choose.webp`} alt="Choose Your Quiz" class="category-image">
     <h2>Select a Quiz Category</h2>
     <div class="categories-container">
-      {#each Object.keys(categoryImages) as category (category)}
+      {#each Object.keys(categoryImages) as category}
         <button on:click={() => { selectedCategory = category; startQuiz(); }}>
           {category}
         </button>
@@ -170,7 +185,7 @@
 {:else if quizStarted}
   <div class="centered-container">
     <div class="quiz-container">
-      <img class="quiz-image" src={`${base}/mbti_images/quiz_data/${selectedCategory}/${imagesForQuiz[currentQuestionIndex]}`} alt="Character image">
+      <img class="quiz-image" src={`${base}/mbti_images/quiz_data/${selectedCategory}/${imagesForQuiz[currentQuestionIndex]}`} alt="Character image" />
       <div class="choices-container">
         {#each currentChoices as choice}
           <button on:click={() => selectAnswer(choice)}>{choice}</button>
@@ -183,7 +198,12 @@
   </div>
 {:else if showResults}
   <div class="centered-container">
+    {#if feedbackImage}
+      <img src={feedbackImage} alt="Feedback" class="feedback-image" />
+    {/if}
     <p>{resultsMessage}</p>
-    <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
+    <div class="restart-button-container">
+      <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
+    </div>
   </div>
 {/if}
