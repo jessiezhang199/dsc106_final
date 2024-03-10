@@ -111,51 +111,66 @@
 </script>
 
 <style>
-  .centered-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-  }
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
 
-  .quiz-container {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
+.quiz-container {
+  text-align: center;
+}
 
-  .categories-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
 
-  .choices-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-  }
+.choices-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
 
-  .quiz-image {
-    max-width: 50%;
-    height: auto;
-    border-radius: 10px;
-  }
+.quiz-image {
+  max-width: 50%;
+  height: auto;
+  border-radius: 10px;
+}
 
-  button {
-    padding: 10px 20px;
-    cursor: pointer;
-  }
+button {
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
 
-  h2 {
-    width: 100%; /* Ensure the title spans the full width */
-    text-align: center; /* Center the title */
-  }
+button:hover {
+  background-color: #45a049;
+}
+
+h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.restart-button-container {
+  margin-top: 20px;
+}
   .feedback-image {
     max-width: 50%; /* Adjust this value as needed */
     max-height: 400px; /* Adjust this value as needed */
@@ -203,7 +218,7 @@
     {/if}
     <p>{resultsMessage}</p>
     <div class="restart-button-container">
-      <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
+      <button on:click={restartQuiz}>Give another shot and see what other cool characters we have!</button>
     </div>
   </div>
 {/if}
