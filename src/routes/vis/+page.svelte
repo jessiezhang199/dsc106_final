@@ -272,10 +272,15 @@
             if (countryPieData) {
               showPieChart(countryPieData, event.pageX, event.pageY);
                // Adjust Y position to avoid cursor overlap
-              
+              showPie = true;
+            } else {
+              tooltipContent = `${d.properties.name}: No data`; 
+              showTooltip = true;
+              tooltipX = event.pageX;
+              tooltipY = event.pageY - 10;
             }
              // Adjust Y position to avoid cursor overlap
-            showPie = true;
+            
             rotationPaused = true;
         })
       //  .on('mousemove', (event, d) => {
@@ -464,9 +469,9 @@
   .search-results {
     margin-top: 20px;
     text-align: left; /* Aligns the text of the search results to the left */
-    padding-left: 20px; /* Adds some padding to align with the search bar, adjust as needed */
+    padding-left: 20px; /* Adds some paddsing to align with the search bar, adjust as needed */
     font-size: 16px;
-    color: #333;
+    color: #28eaca;
   }
   .autocomplete-suggestions {
     position: absolute;
@@ -506,6 +511,12 @@
     font-size: 14px;
     color: white;
   }
+  .textBox {
+    position: absolute;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 
 </style>
 
@@ -513,9 +524,19 @@
 <p style="position: absolute; top: 250px; left: 20px; font-size: 16px; max-width: 150px;">
   In many countries, INFP types count for the majority.
 </p>
-
+<div class="textBox">
 <p style="position: absolute; top: 400px; left: 20px; font-size: 16px; max-width: 150px;">
   According to our data, there is accually only 5 MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ)
+</p>
+</div>
+<p style="position: absolute; top: 110px; left: 10px; font-size: 18px; max-width: 400px;">
+  Search the country you want to learn more.
+</p>
+<p style="position: absolute; top: 110px; left: 700px; font-size: 16px; max-width: 300px;">
+  Try to rotate the map by mouse or place the mouse over the country you like, what do you see?
+</p>
+<p style="position: absolute; top: 200px; left: 850px; font-size: 16px; max-width: 180px;">
+  Fun fact: Do you know that the most common type of mbti for American is Introversion instead of Extraversion? (Surprise!)
 </p>
 
 <div class="search-container">
