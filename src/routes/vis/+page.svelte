@@ -11,6 +11,7 @@
   let pieChartContainer;
   let showPie= false;
   let rotationPaused = false;
+  let backgroundMusic;
 
   let searchCountry = ''; // Variables for search inputs
   let searchResult = ''; // For displaying search results on the page
@@ -65,6 +66,10 @@
     document.body.style.backgroundSize = 'cover'; // Adjust as needed
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundAttachment = 'fixed';
+
+    backgroundMusic = new Audio(`${base}/music/Cornfield_Chase.mp3`);
+    backgroundMusic.loop = true; // Enable looping
+    backgroundMusic.play();
    
 
     const mbtiRes = await fetch('mbti_clean.csv');
@@ -103,6 +108,10 @@
     // Cleanup that also needs to run in the browser
     if (typeof document !== 'undefined') {
       document.body.style.backgroundImage = '';
+    }
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
     }
   });
 
