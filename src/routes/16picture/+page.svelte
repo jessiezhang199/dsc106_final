@@ -77,9 +77,9 @@
   });
 
   onDestroy(() => {
-    // Reset the background when navigating away from the page
-    document.body.style.backgroundImage = ''; // This removes the background image
-    // If you have a default background you'd like to revert to, you can set it here instead of an empty string
+    if (typeof document !== 'undefined') {
+      document.body.style.backgroundImage = '';
+    }
   });
 
   function toggleSort() {
