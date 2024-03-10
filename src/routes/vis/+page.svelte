@@ -383,6 +383,7 @@
   color: white;
   font-family:'Great Vibes', cursive;
   font-size: 40px;
+  opacity: 0.9;
   }
   
   #map {
@@ -406,7 +407,7 @@
     z-index: 100;
   }
   .tooltip.show {
-    opacity: 1;
+    opacity: 0.9;
   }
   .pieChart{
     opacity: 0.5;
@@ -423,14 +424,14 @@
     text-align: left; /* Aligns the text of the search results to the left */
     padding-left: 20px; /* Adds some paddsing to align with the search bar, adjust as needed */
     font-size: 16px;
-    color: #28eaca;
+    color: #28c7ea;
   }
   .autocomplete-suggestions {
     position: absolute;
     width: calc(100% - 80px); /* Set width relative to the Country input field (adjust the value according to your layout) */
-    background-color: #e7f0fa; /* Light blue background */
+    background-color: #aaddeb; /* Light blue background */
     border-radius: 5px; /* Rounded corners */
-    border: 1px solid #ccc; /* Border color */
+    border: 1px solid #90abbb; /* Border color */
     box-sizing: border-box; /* Ensure padding and border are included in the width */
     margin-bottom: 10px; /* Add some bottom margin for spacing */
   }
@@ -439,7 +440,7 @@
     cursor: pointer;
   }
   .autocomplete-suggestions li:hover {
-    background-color: #f0f0f0;
+    background-color: #88caf0a1;
   }
   .legend-container {
     position: absolute;
@@ -480,29 +481,28 @@
   button {
     padding: 4px 4px;
     cursor: pointer;
-    background-color: #0ccced;
-    color: white;
+    background-color: #aaddeb;;
+    color: black;
     border: none;
     border-radius: 6px;
     transition: background-color 0.3s ease;
     font-size: 14px;
     opacity: 0.9;
   }
-  button:hover {
-    background-color: #0ccced;
-  }
+  
   .text p {
     padding: 4px 4px;
     cursor: pointer;
-    background-color: rgba(25, 198, 228, 0.4);;
+    background-color: rgba(25, 198, 228, 0.3);;
     color: white;
     border-radius: 6px;
     transition: background-color 0.3s ease;
     font-size: 14px;
-    opacity: 1;
+    opacity: 0.9;
   }
   p{
     color: white;
+    opacity: 0.8;
   }
 
 </style>
