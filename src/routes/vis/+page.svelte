@@ -98,8 +98,10 @@
   });
 
   onDestroy(() => {
-    // Clear the background when the component is destroyed
-    document.body.style.backgroundImage = '';
+    // Cleanup that also needs to run in the browser
+    if (typeof document !== 'undefined') {
+      document.body.style.backgroundImage = '';
+    }
   });
 
   // Watch for changes in searchCountry and update suggestions
