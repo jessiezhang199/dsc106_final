@@ -72,9 +72,11 @@ onMount(() => {
   });
 
   onDestroy(() => {
-    // Stop the background music when leaving the quiz page
-    backgroundMusic.pause();
-    backgroundMusic.currentTime = 0;
+    // Check if backgroundMusic is defined before pausing it
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+    }
   });
 
   function startQuiz() {
