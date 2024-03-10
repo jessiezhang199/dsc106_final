@@ -508,6 +508,31 @@
     color: white;
     opacity: 0.8;
   }
+  footer {
+  position: absolute;
+  bottom: -600px;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: #f3f3f3; /* Or any color that fits your design */
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+footer a {
+  color: #0645AD; /* Or any color that fits your design */
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+footer p span {
+  color: black; /* Sets the color of "Data source" text to black */
+}
 
 </style>
 
@@ -579,8 +604,11 @@
     <span>No Data</span>
   </div>
 </div>
-<p style="position: absolute; top: 900px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank" >MBTI-TYPES Data</a></p>
-<p style="position: absolute; top: 900px; right: 250px;">Music source: <a href=https://archive.org/download/interstellar-soundtrack target="_blank" >Music</a></p>
 <div class="learn" style="position: absolute; top: 800px; left: 20px;">
   <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
 </div>
+
+<footer>
+  <p><span>Data source:</span> <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">MBTI-TYPES Data</a></p>
+  <p><span>Music source:</span> <a href="https://archive.org/download/interstellar-soundtrack" target="_blank">Music</a></p>
+</footer>
