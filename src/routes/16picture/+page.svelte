@@ -69,6 +69,7 @@
     const dataset = await fetch('page2_bar_df.csv');
     const csv = await dataset.text();
     data = d3.csvParse(csv, d3.autoType);
+    document.body.style.backgroundImage = `url(${base}/page2/bg.jpg)`;
     // Extract MBTI types from the dataset
     mbtiTypes = Array.from(new Set(data.map(d => d.mbti)));
     drawRadarChart();
