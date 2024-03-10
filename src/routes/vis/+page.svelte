@@ -159,6 +159,7 @@
       showlegend: false,
       width: 400, // Set the desired width
       height: 400, // Set the desired height
+      // opacity: 0.5,
     };
 
     Plotly.newPlot('pieChartContainer', plotData, plotLayout);
@@ -166,6 +167,7 @@
     pieChartContainer.style.position = 'absolute';
     pieChartContainer.style.left = `${mouseX + 10}px`;
     pieChartContainer.style.top = `${mouseY + 10}px`;
+    pieChartContainer.style.opacity = 0.8;
     
     rotationPaused = true;
   }
@@ -382,9 +384,7 @@
   font-family:'Great Vibes', cursive;
   font-size: 40px;
   }
-  p {
-    color: white;
-  }
+  
   #map {
     width: 80%; /* Adjust the width as needed */
     min-height: 700px; /* Adjust the height as needed */
@@ -491,26 +491,40 @@
   button:hover {
     background-color: #0ccced;
   }
+  .text p {
+    padding: 4px 4px;
+    cursor: pointer;
+    background-color: rgba(25, 198, 228, 0.4);;
+    color: white;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    opacity: 1;
+  }
+  p{
+    color: white;
+  }
 
 </style>
 
 <h1>Which MBTI Type is Most Common in Your Country?</h1>
-
-<p style="position: absolute; top: 250px; left: 20px; font-size: 16px; max-width: 150px;">
+<div class="text">
+<p style="position: absolute; top: 320px; left: 20px; font-size: 16px; max-width: 200px;">
   In many countries, INFP types count for the majority.
 </p>
+<p style="position: absolute; top: 500px; left: 20px; font-size: 16px; max-width: 200px;">
+  According to our data, there is accually only 5 MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ), and the rest of the types were minority.
+</p>
 
-<p style="position: absolute; top: 400px; left: 20px; font-size: 16px; max-width: 150px;">
-  According to our data, there is accually only 5 MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ)
-</p>
-<p style="position: absolute; top: 140px; left: 10px; font-size: 18px; max-width: 400px;">
-  Search the country you want to learn more.
-</p>
-<p style="position: absolute; top: 140px; left: 700px; font-size: 16px; max-width: 300px;">
+<p style="position: absolute; top: 200px; left: 770px; font-size: 16px; max-width: 300px;">
   Try to rotate the map by mouse or place the mouse over the country you like, what do you see?
 </p>
-<p style="position: absolute; top: 230px; left: 850px; font-size: 16px; max-width: 180px;">
+<p style="position: absolute; top: 330px; left: 880px; font-size: 16px; max-width: 180px;">
   Fun fact: Do you know that the most common type of mbti for American is Introversion instead of Extraversion? (Surprise!)
+</p>
+</div>
+<p style="position: absolute; top: 140px; left: 10px; font-size: 18px; max-width: 400px;">
+  Search the country you want to learn more.
 </p>
 
 <div class="search-container">
