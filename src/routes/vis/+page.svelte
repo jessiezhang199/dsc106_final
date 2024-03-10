@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import * as d3 from 'd3';
   import { geoNaturalEarth1, geoPath, geoOrthographic} from 'd3-geo';
   import { goto } from '$app/navigation';
@@ -95,6 +95,13 @@
 
     // After fetching and processing your data, populate allCountries
     allCountries = Array.from(new Set(mbtiData.map(d => d.Country))).sort();
+  });
+
+  onDestroy(() => {
+    // Cleanup that also needs to run in the browser
+    if (typeof document !== 'undefined') {
+      document.body.style.backgroundImage = '';
+    }
   });
 
   // Watch for changes in searchCountry and update suggestions
