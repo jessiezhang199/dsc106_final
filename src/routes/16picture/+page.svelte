@@ -410,8 +410,8 @@
     background-color: hsl(43, 59%, 88%);
     width: 200px;
     height:50px;
-    left: 330px; 
-    top: 60px;
+    right: 330px; 
+    top: 70px;
     font-size: 12px;
     text-align: center;
   }
@@ -438,6 +438,20 @@
     font-size: 12px;
     text-align: center;
   }
+
+  #tips4-container {
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    background-color: hsl(46, 57%, 95%);
+    width: 250px;
+    left: 20px; 
+    top: 70px;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 13px;
+    text-align: center;
+  }
+
   footer {
   position: absolute;
   bottom: -600px;
@@ -522,6 +536,21 @@ footer a:hover {
   Extroverts tend to gravitate towards energetic types of music, especially dance music and loud music. This tendency is particularly evident in ESFPs and ESTPs!
 </p>
 
+
+<div id="tips4-container">
+  <p>
+    Introversion (I) – Extroversion (E)
+  </p>
+  <p>
+    Intuition (N) – Sensing (S)
+  </p>
+  <p>
+    Thinking (T) – Feeling (F)
+  </p>
+  <p>
+    Judging (J) – Perceiving (P)
+  </p>
+</div>
 <div
   class="music-container"
   on:dblclick={togglePlayPause}
