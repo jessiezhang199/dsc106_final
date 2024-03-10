@@ -604,8 +604,8 @@ footer p span {
     <span>No Data</span>
   </div>
 </div>
-<div class="learn" style="position: absolute; top: 800px; left: 20px;">
-  <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
+<div class="learn" style="position: absolute; top: 800px; right: 20px;">
+  <button on:click={() => goto(`${base}/quiz`)}>Ready for a quiz?</button>
 </div>
 
 <footer>

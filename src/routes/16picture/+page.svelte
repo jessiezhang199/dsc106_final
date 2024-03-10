@@ -439,6 +439,25 @@
     text-align: center;
   }
 
+  .deep-dive-button {
+  position:absolute; /* Fixed relative to the viewport */
+  bottom: -260px;
+  right: 20px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background-color: hsl(43, 59%, 88%); /* Or use rgba(11, 10, 10, 0.178) for black as per your request */
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 10; /* Ensure it's above other content */
+}
+
+button:hover, .deep-dive-button:hover {
+  background-color: #0056b3;
+}
+
   #tips4-container {
     position: absolute;
     border-radius: 10px;
@@ -577,9 +596,11 @@ footer a:hover {
   <div id="chart"></div>
 </div>
 
-<div style="display: flex; justify-content: center; margin-top: 20px;">
-    <button on:click={() => goto(`${base}/vis`)}>Learn more</button>
-</div>
+
+
+<button class="deep-dive-button" on:click={() => goto(`${base}/vis`)}>Learn More</button>
+
+
 
 <div id="tips3-container">
   <p>
