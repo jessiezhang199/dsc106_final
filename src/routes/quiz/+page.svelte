@@ -6,6 +6,7 @@
   import { writable } from 'svelte/store';
   import { base } from '$app/paths';
   import { fade } from 'svelte/transition';
+  import { onMount, onDestroy } from 'svelte';  
 
   const categoryImages = {
     "Barbie": ["ISFJ-Gloria.jpg", "ISFP-Allen.jpg", "ESFJ-Barbie.jpg", "ESFP-Ken.jpg"],
@@ -14,6 +15,7 @@
     "The Avengers": ["ENFP-Spider_Man.jpg", "ENTP-Iron_Man.jpg", "ESTP-God_of_Thunder.jpg", "ESTP-Rocket_Raccoon.jpg", "INFJ-Vision.jpg", "INFP-Scarlet_Witch.jpg", "INTJ-Doctor_Strange.jpg", "ISFJ-Captain_America.jpg", "ISFJ-Groot.jpg", "ISFP-Hulk.jpg", "ISTP-Black_Widow.jpg"]
   };
 
+  let backgroundMusic;
   let selectedCategory = '';
   let quizStarted = false;
   let currentQuestionIndex = 0;
@@ -61,6 +63,19 @@
   "ISFP-Hulk.jpg": "Hulk",
   "ISTP-Black_Widow.jpg": "Black Widow"
 };
+
+onMount(() => {
+    // Play the background music when entering the quiz page
+    backgroundMusic = new Audio(`${base}/music/quiz_song.mp3`);
+    backgroundMusic.loop = true; // Enable looping
+    backgroundMusic.play();
+  });
+
+  onDestroy(() => {
+    // Stop the background music when leaving the quiz page
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+  });
 
   function startQuiz() {
     imagesForQuiz = selectRandomImages(categoryImages[selectedCategory]);
