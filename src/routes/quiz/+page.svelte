@@ -108,50 +108,58 @@
 </script>
 
 <style>
-  /* Other styles... */
-
-  .quiz-image {
-    width: auto; /* maintain aspect ratio */
-    max-width: 50%; /* adjust this value to scale the image size */
-    height: auto; /* maintain aspect ratio */
-    border-radius: 10px; /* if you want rounded corners */
-  }
   .centered-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Full height */
+    min-height: 100vh;
   }
 
   .quiz-container {
-    text-align: center; /* Center text */
+    text-align: center;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center elements horizontally */
-    gap: 20px; /* Space between elements */
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
   }
 
   .choices-container {
     display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center; /* Center buttons horizontally */
-    gap: 10px; /* Space between buttons */
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .quiz-image {
+    max-width: 50%;
+    height: auto;
+    border-radius: 10px;
   }
 
   button {
     padding: 10px 20px;
     cursor: pointer;
-    /* Additional button styling here */
+  }
+
+  h2 {
+    width: 100%; /* Ensure the title spans the full width */
+    text-align: center; /* Center the title */
   }
 </style>
 
 
 {#if !quizStarted && !showResults}
   <div class="centered-container">
-    <!-- Category Selection Buttons -->
-    <div class="quiz-container">
-      <h2>Select a Quiz Category</h2>
+    <h2>Select a Quiz Category</h2>
+    <div class="categories-container">
       {#each Object.keys(categoryImages) as category (category)}
         <button on:click={() => { selectedCategory = category; startQuiz(); }}>
           {category}
@@ -161,25 +169,21 @@
   </div>
 {:else if quizStarted}
   <div class="centered-container">
-    <!-- Quiz Question and Choices -->
     <div class="quiz-container">
       <img class="quiz-image" src={`${base}/mbti_images/quiz_data/${selectedCategory}/${imagesForQuiz[currentQuestionIndex]}`} alt="Character image">
       <div class="choices-container">
         {#each currentChoices as choice}
           <button on:click={() => selectAnswer(choice)}>{choice}</button>
         {/each}
-        {#if showFeedback}
-          <p>{feedbackMessage}</p>
-        {/if}
       </div>
+      {#if showFeedback}
+        <p>{feedbackMessage}</p>
+      {/if}
     </div>
   </div>
 {:else if showResults}
   <div class="centered-container">
-    <!-- Quiz Results -->
-    <div class="quiz-container">
-      <p>{resultsMessage}</p>
-      <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
-    </div>
+    <p>{resultsMessage}</p>
+    <button on:click={restartQuiz}>Give another shot and see what other cool characters we have</button>
   </div>
 {/if}
