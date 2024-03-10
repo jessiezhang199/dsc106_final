@@ -436,7 +436,7 @@
 
 <div id="tips2-container">
   <p>
-    Tips: Click the button below to play the exclusive music! (Click again to pause)
+    Tips: Click the button below to play music! (Click again to pause)
   </p>
 </div>
 
