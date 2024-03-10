@@ -233,7 +233,7 @@ p {
   }
   footer {
     position: absolute;
-    bottom: -60px;
+    bottom: -80px;
     width: 100%;
     text-align: center;
     padding: 10px;
@@ -265,7 +265,7 @@ p {
 {#if !quizStarted && !showResults}
   <div class="centered-container">
     <img src={`${base}/mbti_images/quiz_data/quiz_choose.webp`} alt="Choose Your Quiz" class="category-image">
-    <h2>Select a Quiz Category</h2>
+    <h2>Select your favorite fictional universe and start the quiz!</h2>
     <div class="categories-container">
       {#each Object.keys(categoryImages) as category}
         <button on:click={() => { selectedCategory = category; startQuiz(); }}>
