@@ -444,7 +444,7 @@
   .legend-container {
     position: absolute;
     top:200px;
-    right: 100px;
+    right: 50px;
     display: flex;
     flex-direction: column;
   }
@@ -561,8 +561,8 @@
     <span>No Data</span>
   </div>
 </div>
-<p style="position: absolute; top: 800px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank" color ='white'>MBTI-TYPES Data</a></p>
-
+<p style="position: absolute; top: 900px; right: 20px;">Data source: <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank" >MBTI-TYPES Data</a></p>
+<p style="position: absolute; top: 900px; right: 250px;">Music source: <a href=https://archive.org/download/interstellar-soundtrack target="_blank" >Music</a></p>
 <div class="learn" style="position: absolute; top: 800px; left: 20px;">
   <button on:click={() => goto(`${base}/quiz`)}>Learn more</button>
 </div>
