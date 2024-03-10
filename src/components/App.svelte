@@ -179,7 +179,7 @@ section:nth-child(4) .text-container {
   <section>
     <div class="text-container">
       <p>Ever wondered why we see the world so differently? It's not just random; there's a method to the madness called the MBTI.</p>
-      <p>MBTI, or Myers-Briggs Type Indicator, isn't about boxing us into categories. It's a lens to celebrate our unique flavors of personality. From 'Explorers' craving adventure to 'Diplomats' weaving creativity, MBTI reveals our strengths and growth paths.</p>
+      <p>The MBTI, short for Myers-Briggs Type Indicator, was invented by Katharine Cook Briggs and her daughter Isabel Briggs Myers. It's not about boxing us into categories but providing a lens to celebrate our unique flavors of personality. Comprising sixteen distinct personality types, each composed of eight letters, MBTI reveals our strengths and growth paths.</p>
       <p>Ready to uncover what makes you uniquely you? Let's dive into this journey of self-discovery and embrace our diverse personalities!</p>
     </div>
     <div class="image-container">

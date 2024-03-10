@@ -276,11 +276,24 @@ p {
   max-height: 100%; /* Adjust as needed */
   /* additional styling as needed */
 }
+.fancy-text {
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #f0f8ff; /* Light background to make the text stand out */
+  color: #333; /* Dark text color for contrast */
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px; /* Rounded corners */
+  border: 2px dashed #4CAF50; /* Dashed border for a bit of flair */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Soft shadow for depth */
+  transform: rotate(-5deg); /* Slight rotation for irregularity */
+}
 </style>
 
 
 {#if !quizStarted && !showResults}
   <div class="centered-container">
+    <div class="fancy-text">Help capybara pass the MBTI 101 quiz</div>
     <img src={`${base}/mbti_images/quiz_data/quiz_choose.webp`} alt="Choose Your Quiz" class="category-image">
     <h2>Select your favorite fictional universe and start the quiz!</h2>
     <div class="categories-container">
@@ -291,6 +304,7 @@ p {
       {/each}
     </div>
   </div>
+  
 {:else if quizStarted}
   <div class="centered-container">
     <div class="quiz-container">
