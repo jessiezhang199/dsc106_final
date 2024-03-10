@@ -1,6 +1,9 @@
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
+  import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
+  
 
 
   const mbtiColorPalette = {
@@ -41,6 +44,7 @@
     // Default range for other columns (if any)
     'default': [0, 0.2]
   };
+  let isSorted = false;
 
   onMount(async () => {
     const dataset = await fetch('page2_bar_df.csv');
@@ -49,8 +53,14 @@
     // Extract MBTI types from the dataset
     mbtiTypes = Array.from(new Set(data.map(d => d.mbti)));
     drawRadarChart();
+    drawChart();
   });
 
+
+  function toggleSort() {
+  isSorted = !isSorted;
+  drawChart(); // Redraw the chart with the new sort state
+  }
   function handleMBTIChange(event) {
     selectedMBTI = `${EI}${NS}${FT}${PJ}`;
     drawRadarChart();
@@ -62,7 +72,7 @@
     const radius = 150;
     const angleSlice = (2 * Math.PI) / columns.length;
     const levels = 5; // Number of concentric circles/levels
-    const chartCenterY = 300;  // Center Y position of the radar chart
+    const chartCenterY = 250;  // Center Y position of the radar chart
     
 
     // Clear previous radar chart
@@ -73,7 +83,7 @@
       .attr('width', radarWidth)
       .attr('height', radarHeight)
       .append('g')
-      .attr('transform', `translate(${radarWidth / 2 -100}, ${chartCenterY})`);
+      .attr('transform', `translate(${radarWidth / 2 -110}, ${chartCenterY})`);
 
     // Radar scale
     const rScale = d3.scaleLinear()
@@ -161,11 +171,8 @@
       .style('font-size', '10px')
       .attr('text-anchor', 'middle');
   }
-  let imageUrl = `/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; // Assuming the images are in PNG format.
-
-  $: imageUrl = `/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; 
   $: selectedMBTI = `${EI}${NS}${FT}${PJ}`;
-  $: imageUrl = `/mbti_images/${selectedMBTI.toLowerCase()}.jpg`; 
+
 
   function drawChart() {
     d3.select("#chart").select("svg").remove();
@@ -190,6 +197,11 @@
     // Set the domain for the y-scale based on the selected column
     const domain = yDomains[selectedColumn] || yDomains['default'];
     y.domain(domain);
+    x.domain(data.map(d => d.mbti));
+
+    if (isSorted) {
+    data.sort((a, b) => d3.descending(a[selectedColumn], b[selectedColumn]));
+  }
     x.domain(data.map(d => d.mbti));
 
     // X-axis
@@ -217,9 +229,50 @@
     selectedColumn = newColumn;
     drawChart();
   }
+
+  let audio;
+  let isPlaying = false;
+
+  $: {
+    if (audio) {
+      audio.pause();
+      audio.load(); // Reload the new source
+    }
+  }
+  function togglePlayPause() {
+    if (audio) {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      isPlaying = !isPlaying;
+    }
+  }
+  function handleKeyPress(event) {
+    // Toggle play/pause on Enter or Space key press
+    if (event.key === 'Enter' || event.key === ' ') {
+      togglePlayPause();
+    }
+  }
+  function handleButtonClick(event) {
+    event.stopPropagation(); // Prevent click from propagating to the parent div
+    togglePlayPause();
+  }
+
 </script>
 
 <style>
+  .music-container {
+    position: fixed; 
+    right: 10px; /* Distance from the left edge */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust to center based on its height */
+    background: #f8f8f8; /* Background color */
+    padding: 10px; /* Padding around content */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  }
   .container {
     display: flex;
     align-items: flex-start; /* Align items vertically in the center */
@@ -230,22 +283,44 @@
     width: 350px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
     margin-left: -300px; /* Add some space between the image and the radar chart */
-    margin-top: 100px; 
+    margin-top: 80px; 
   }
   #radarChart {
     width: 150px; /* Set the width of the radar chart */
     height: 150px; /* Set the height of the radar chart */
     margin-left: 30px;
   }
-
-  #radarChart svg {
-    width: 100%; /* Make the SVG fill the container */
-    height: 100%; /* Make the SVG fill the container */
-  }
-
   #chart-container {
     text-align: center; /* Center the chart container */
     margin-top: 100px; /* Space from the top elements */
+  }
+
+  select {
+  border-radius: 20px; /* Gives the dropdown rounded corners */
+  padding: 5px 10px; /* Adds some padding inside the dropdown */
+  background-color: #ede9e6; /* Sets a light grey background color */
+  color: #333; /* Sets the text color */
+  border: 3px solid #ccc; /* Adds a light grey border */
+  outline: none; /* Removes the default focus outline */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+  -webkit-appearance: none; /* Removes default styling for Webkit browsers */
+  -moz-appearance: none; /* Removes default styling for Mozilla browsers */
+  appearance: none; /* Removes default styling */
+}
+
+
+.mbti-selectors::after {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #333;
+  pointer-events: none; /* Ensures clicks on the arrow don't interfere with the select functionality */
+}
+.mbti-selectors {
+    margin-top: 20px; 
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Adds some space between each select element */
   }
 </style>
 
@@ -274,25 +349,47 @@
 
 <div class="container">
   <div>
-    <img class="mbti-image" src={imageUrl} alt={selectedMBTI}>
+    <img class="mbti-image" 
+    src="{base}/mbti_images/{selectedMBTI.toLowerCase()}.jpg" alt={selectedMBTI}>
   </div>
   <div id="radarChart"></div>
 </div>
 
+
+<div
+  class="music-container"
+  on:dblclick={togglePlayPause}
+  on:keydown={handleKeyPress}
+  tabindex="0"
+  role="button"
+  aria-pressed={isPlaying.toString()}
+>
+  <audio bind:this={audio} src="{base}/music/{selectedMBTI}.mp3"></audio>
+  <button on:click={handleButtonClick}>Play Music</button>
+</div>
+
 <div id="chart-container">
-  <div id="chart"></div>
   <!-- Dropdown to select column for the bar chart -->
   <select bind:value={selectedColumn} on:change="{() => updateColumn(selectedColumn)}">
     {#each columns as column}
       <option value="{column}">{column}</option>
     {/each}
   </select>
+  <button on:click={toggleSort}>
+    {isSorted ? 'Unsort' : 'Sort'}
+  </button>
+  <div id="chart"></div>
 </div>
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     <button on:click={() => goto(`${base}/vis`)}>Learn more</button>
 </div>
 
-<p style="position: absolute; top: 700px; right: 20px;">
-  Image Source: <a href="https://www.xiaohongshu.com/user/profile/6033ab1800000000010075ac?xhsshare=CopyLink&appuid=5c4e9b04000000001203ea7e&apptime=1709362317" target="_blank">xiaohongshu</a>
-</p>
+<div style="display: flex; justify-content: space-between;">
+  <p>
+    Data Source: <a href="https://www.kaggle.com/code/xtrnglc/spotify-mbti-playlist-analysis" target="_blank">Spotify MBTI Playlist Analysis</a>
+  </p>
+  <p>
+    Image Source: <a href="https://www.xiaohongshu.com/user/profile/6033ab1800000000010075ac?xhsshare=CopyLink&appuid=5c4e9b04000000001203ea7e&apptime=1709362317" target="_blank">xiaohongshu</a>
+  </p>
+</div>
