@@ -288,6 +288,27 @@ p {
   box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Soft shadow for depth */
   transform: rotate(-5deg); /* Slight rotation for irregularity */
 }
+.button-wrapper {
+  margin-top: 20px; /* Adjust this value as needed for spacing */
+}
+
+.external-link-button {
+  display: inline-block; /* Allows padding and dimensions to be applied correctly */
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: #007bff; /* Blue background color */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none; /* Remove the underline from the link */
+}
+
+.external-link-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
 </style>
 
 
@@ -335,8 +356,11 @@ p {
       <img src={feedbackImage} alt="Feedback" class="feedback-image" />
     {/if}
     <p>{resultsMessage}</p>
-    <div class="restart-button-container">
+    <div class="button-wrapper">
       <button on:click={restartQuiz}>Thank you for the journey with Capybara! <br> Give another shot and see what other cool characters we have!</button>
+    </div>
+    <div class="button-wrapper">
+      <a href="https://www.16personalities.com/free-personality-test" target="_blank" class="external-link-button">Test your own MBTI!</a>
     </div>
   </div>
 {/if}

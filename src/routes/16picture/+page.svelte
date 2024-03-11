@@ -446,8 +446,8 @@
   padding: 15px 30px;
   font-size: 1.2rem;
   border-radius: 8px;
-  background-color: hsl(43, 59%, 88%); /* Or use rgba(11, 10, 10, 0.178) for black as per your request */
-  color: black;
+  background-color: hsl(160, 59%, 52%); /* Or use rgba(11, 10, 10, 0.178) for black as per your request */
+  color: white;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -598,7 +598,7 @@ footer a:hover {
 
 
 
-<button class="deep-dive-button" on:click={() => goto(`${base}/vis`)}>Learn More</button>
+<button class="deep-dive-button" on:click={() => goto(`${base}/vis`)}>America-bala needs help!</button>
 
 
 

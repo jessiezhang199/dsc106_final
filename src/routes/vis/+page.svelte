@@ -510,7 +510,7 @@
   }
   footer {
   position: absolute;
-  bottom: -600px;
+  bottom: -400px;
   width: 100%;
   text-align: center;
   padding: 10px;
@@ -548,7 +548,7 @@ footer p span {
 <p style="position: absolute; top: 200px; left: 790px; font-size: 16px; max-width: 300px;">
   Try to rotate the map by mouse or place the mouse over the country you like, what do you see?
 </p>
-<p style="position: absolute; top: 560px; left: 950px; font-size: 16px; max-width: 180px;">
+<p style="position: absolute; top: 500px; left: 950px; font-size: 16px; max-width: 180px;">
   Fun fact: Do you know that the most common type of mbti for American is Introversion instead of Extraversion? (Surprise!)
 </p>
 </div>

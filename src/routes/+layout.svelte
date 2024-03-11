@@ -27,8 +27,8 @@
 
 <nav>
   <a href="/" on:click|preventDefault={() => goto(`${base}/`)}>Home</a>
-  <a href="/" on:click|preventDefault={() => goto(`${base}/16picture`)}>Music with MBTI Types</a>
-  <a href="/" on:click|preventDefault={() => goto(`${base}/vis`)}>Country Distribution</a>
+  <a href="/" on:click|preventDefault={() => goto(`${base}/16picture`)}>16 Personalities-16 Styles</a>
+  <a href="/" on:click|preventDefault={() => goto(`${base}/vis`)}>MBTI across the World</a>
   <a href="/" on:click|preventDefault={() => goto(`${base}/quiz`)}>Fun Quiz</a>
 </nav>
 
