@@ -203,7 +203,7 @@
       .attr('x', (d, i) => rScale(1.1) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr('y', (d, i) => rScale(1.1) * Math.sin(angleSlice * i - Math.PI / 2))
       .text(d => d)
-      .style('font-size', '10px')
+      .style('font-size', '15px')
       .attr('text-anchor', 'middle');
 
     svg.append('text')
