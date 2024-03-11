@@ -68,7 +68,7 @@ onMount(() => {
     // Play the background music when entering the quiz page
     backgroundMusic = new Audio(`${base}/music/quiz_song.mp3`);
     backgroundMusic.loop = true; // Enable looping
-    backgroundMusic.volume = 0.6; // Set volume to 50%
+    backgroundMusic.volume = 0.25; // Set volume to 50%
     backgroundMusic.play();
   });
 
