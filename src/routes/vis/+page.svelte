@@ -548,7 +548,7 @@ footer p span {
 <p style="position: absolute; top: 200px; left: 790px; font-size: 16px; max-width: 300px;">
   Try to rotate the map by mouse or place the mouse over the country you like, what do you see?
 </p>
-<p style="position: absolute; top: 330px; left: 900px; font-size: 16px; max-width: 180px;">
+<p style="position: absolute; top: 560px; left: 950px; font-size: 16px; max-width: 180px;">
   Fun fact: Do you know that the most common type of mbti for American is Introversion instead of Extraversion? (Surprise!)
 </p>
 </div>
@@ -604,10 +604,10 @@ footer p span {
     <span>No Data</span>
   </div>
 </div>
-<div class="learn" style="position: absolute; top: 800px; right: 20px;">
+<div class="learn" style="position: absolute; top: 700px; right: 20px;">
+  <img src="{base}/page3/capybara.webp" alt="Capybara" style="width: 200px; height: auto; margin-right: 50px;">
   <button on:click={() => goto(`${base}/quiz`)}>Ready for a quiz?</button>
 </div>
-
 <footer>
   <p><span>Data source:</span> <a href="https://www.kaggle.com/datasets/yamaerenay/mbtitypes-full" target="_blank">MBTI-TYPES Data</a></p>
   <p><span>Music source:</span> <a href="https://archive.org/download/interstellar-soundtrack" target="_blank">Music</a></p>
