@@ -542,14 +542,14 @@ footer p span {
   In many countries, INFP types count for the majority.
 </p>
 <p style="position: absolute; top: 500px; left: 20px; font-size: 16px; max-width: 200px;">
-  According to our data, there are only 5 major MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ), and the rest of the types were minority.
+  According to our data, there are only 5 major MBTI types in the map. (INFP, ESFJ, ESTJ, ENFP, ISFJ).
 </p>
 
 <p style="position: absolute; top: 200px; left: 790px; font-size: 16px; max-width: 300px;">
-  Try to rotate the map by mouse or place the mouse over the country you like, what do you see?
+  Try to rotate the map by mouse or place the mouse over the country you like. What do you see?
 </p>
 <p style="position: absolute; top: 500px; left: 950px; font-size: 16px; max-width: 180px;">
-  Fun fact: Do you know that the most common type of mbti for American is Introversion instead of Extraversion? (Surprise!)
+  Fun fact: Do you know that there are more introverts than extroverts in America according to MBTI? (We know it's a surprise!)
 </p>
 </div>
 <p style="position: absolute; top: 140px; left: 10px; font-size: 18px; max-width: 400px;">
