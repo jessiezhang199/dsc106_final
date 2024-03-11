@@ -604,7 +604,7 @@ footer p span {
     <span>No Data</span>
   </div>
 </div>
-<div class="learn" style="position: absolute; top: 700px; right: 20px;">
+<div class="learn" style="position: absolute; top: 650px; right: 20px;">
   <img src="{base}/page3/capybara.webp" alt="Capybara" style="width: 200px; height: auto; margin-right: 50px;">
   <button on:click={() => goto(`${base}/quiz`)}>Ready for a quiz?</button>
 </div>

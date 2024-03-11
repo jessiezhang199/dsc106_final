@@ -160,21 +160,21 @@ section:nth-child(4) .text-container {
 
 <div class="scroller-container">
   <section>
-    <div class="text-container">Do you know Arnold Schwarzenegger is an 'architect'?</div>
+    <div class="text-container">Do you know Arnold Schwarzenegger is an 'Architect'?</div>
     <div class="image-container">
       <img src="{base}/mbti_images/first_page_data/arnold.webp" alt="Arnold Schwarzenegger">
     </div>
     <div class="scroll-hint">↓ Scroll down to continue</div>
   </section>
   <section>
-    <div class="text-container">Do you know Madonna is an 'entrepreneur'?</div>
+    <div class="text-container">Do you know Madonna is an 'Entrepreneur'?</div>
     <div class="image-container">
       <img src="{base}/mbti_images/first_page_data/madonna.webp" alt="Madonna">
     </div>
     <div class="scroll-hint">↓ Scroll down to continue</div>
   </section>
   <section>
-    <div class="text-container">Do you know Beyonce is a 'defender'?</div>
+    <div class="text-container">Do you know Beyonce is a 'Defender'?</div>
     <div class="image-container">
       <img src="{base}/mbti_images/first_page_data/beyonce.webp" alt="Beyonce">
     </div>
