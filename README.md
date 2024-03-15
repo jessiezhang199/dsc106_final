@@ -1,107 +1,15 @@
-# svelte-template
+Welcome to our website! Ever wondered if Arnold Schwarzenegger is more than just an action star? Or if Madonna has entrepreneurial skills? And did you know Beyonce is not just a singer but also a 'defender'? These questions might seem unusual, but they're all related to the Myers-Briggs Type Indicator (MBTI). Let's explore MBTI, a tool to understand our unique personalities, created by Katharine Cook Briggs and Isabel Briggs Myers. With sixteen distinct personality types, MBTI helps celebrate our individual strengths and growth paths.
 
-This repo contains a template for a Svelte project that uses D3. It has extra
-configuration to make it easy to deploy to GitHub pages.
+Click this website to see our visualization: https://jessiezhang199.github.io/dsc106_final/
+Our visualization succeeds at explaining the main takeaways by providing comprehensive insights into MBTI personality types, their associated characteristics, and how they manifest in real-world scenarios. Through interactive elements such as music samples, bar charts, and an interactive world map, viewers are not only informed but also engaged, fostering a deeper connection to the material. 
 
-## Getting started
+ 
+In the top left corner of page 2, you'll find an introduction to the meaning behind each letter in the MBTI personality typing system. You can explore different personality types by selecting them using the buttons provided. If you're curious about the music preferences of a specific type, simply click on it. In the middle of the left side, there's a button waiting for you to press – it'll play a snippet of music favored by that personality type. Let's delve deeper into the music tastes of ENFPs, shall we? By examining Spotify's audio quality features like danceability, valence, energy, loudness, acousticness, instrumentalness, and liveness, you'll get a clearer picture of what resonates with this personality type. Take a look at the bottom of the screen, where a bar chart displays the overall distribution of these music features across different MBTI types. It's a fascinating journey into the intersection of personality and music!
 
-Click the green "Use this template" button, then "Create a new repository" in
-the top right portion of the webpage.
 
-![template](assets/template.png)
+On page 3, you will find that there is an earth model with different colors in different countries. Those colors represent the most common mbti type in that country. The color legend is on the right. In many countries, INFP types count for the majority. You can use the search bar to find the country you want to learn more about and it will show the most common mbti type and what is the percentages over all in the country. And the country you search for will be highlighted to dark gray in case you cannot find the country in the map. You can also try to change the side of the earth to the country you like. You might also recognize that when you place your mouse to the top of the country, a pie chart with all mbti types percentage will help you to learn more about the mbti types in the country you like. 
 
-After GitHub completes the cloning process, navigate to the Settings page. On
-the left panel, under the "Pages" tab, locate the "Source" section and select
-"GitHub Actions" as the source.
+In the quiz section, you'll find folders filled with captivating images from iconic universes like DC Comics, Barbie, and Hogwarts. Choose a folder that intrigues you the most, and let's embark on a journey of discovery together. Whether you're drawn to the thrilling adventures of superheroes, the timeless charm of Barbie, or the enchanting world of magic at Hogwarts, there's a quiz waiting just for you. Select your preferred folder and let the quiz begin!
 
-Then, clone this repository to your local computer. After cloning the
-repository, navigate to the repository in your terminal and run:
 
-```
-npm install
-```
-
-To start your local dev server, run
-
-```
-npm run dev
-```
-
-You can now edit your files in VSCode to see changes update in your browser.
-Start by making a small edit to `src/components/App.svelte` and make sure that
-the changes are reflected in your browser window.
-
-### Including static files (e.g. datasets)
-
-To include files like datasets and images in your project, place your files in
-the `static/` folder (NOT the `src/` folder).
-
-For example, if you have a file `static/temp.csv`, your code can load that
-file by using a relative path:
-
-```js
-const res = await fetch('temp.csv');
-```
-
-Note that with our default configuration, all of these snippets **might work
-locally but not on GitHub pages**:
-
-```js
-// None of these work properly
-// const res = await fetch('/temp.csv');
-// const res = await fetch('static/temp.csv');
-```
-
-### Using other packages (e.g. Mapbox)
-
-To include other packages in your project, install them first by running:
-
-```js
-npm install --save moment
-```
-
-Then, you can import the packages in your Svelte JS like so:
-
-```js
-import moment from 'moment';
-```
-
-You should double check the package page to make sure you didn't miss anything
-during import. For example, the web page for setting up mapbox-gl with Svelte
-(https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-svelte/) says
-that you should actually write two `import` statements:
-
-```js
-// This imports the package itself
-import mapbox from 'mapbox-gl';
-// This import the mapbox CSS styles
-import 'mapbox-gl/dist/mapbox-gl.css';
-```
-
-## Deploying your webpage
-
-To update your GitHub page, make a commit locally and push your changes to
-GitHub. When you do so, the corresponding GitHub Actions will execute and
-automatically update your static website hosted at
-`https://your-username.github.io/your-repo-name` for you.
-
-![github-pages](assets/github-pages.png)
-
-## Debugging
-
-**My code works locally but when I push to GitHub the deployment fails.**
-
-Run `npm run build`, which tries to replicate GitHub's build process. Ideally,
-that command will give the same error message as the GitHub workflow. If so,
-you can tinker with your code locally until `npm run build` works, which will
-have a very high chance of fixing your build. If the command doesn't give the
-same result as the GitHub workflow, make an Ed post.
-
-**My code works locally and deploys, but nothing renders on the screen.**
-
-Check to make sure that your static files (e.g. datasets) are loaded properly.
-For example, if you have a file `static/temp.csv`, your code should load that
-file by using a relative path.
-
-If that doesn't fix your bug, open your browser's console window and see if an
-error appears.
+The overarching lesson from our visualization is the profound impact of personality diversity on various aspects of life, from music preferences to global distribution. By exploring the intersection of personality traits and their manifestations in different contexts, viewers gain a deeper understanding of the richness and complexity of human nature. Ultimately, the visualization encourages viewers to embrace and celebrate the diversity of personalities, recognizing the unique strengths and perspectives that each individual brings to the table.

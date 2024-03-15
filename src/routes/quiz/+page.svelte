@@ -7,6 +7,7 @@
   import { base } from '$app/paths';
   import { fade } from 'svelte/transition';
   import { onMount, onDestroy } from 'svelte';  
+  import { goto } from '$app/navigation';
 
   const categoryImages = {
     "Barbie": ["ISFJ-Gloria.jpg", "ISFP-Allen.jpg", "ESFJ-Barbie.jpg", "ESFP-Ken.jpg"],
@@ -310,6 +311,21 @@ p {
 .external-link-button:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
+
+.side-button {
+  position: fixed; /* Fixed positioning relative to the viewport */
+  top: 80%; /* Center vertically */
+  right: 50px; /* Align to the right side */
+  transform: translateY(-50%); /* Center relative to its height */
+  z-index: 1000; /* Ensure it's above other content */
+  padding: 10px 20px; /* Padding for better clickability */
+  background-color: #f44336; /* Red background for visibility */
+  color: white; /* White text color */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px 5px 5px 5px; /* Rounded corners on the left side */
+}
+
 </style>
 
 
@@ -365,4 +381,9 @@ p {
     </div>
   </div>
 {/if}
+<div class="button-container">
+  <button on:click={() => goto(`${base}/conclution`)} class="side-button">END!</button>
+</div>
+
+
 

@@ -422,7 +422,7 @@
     background-color: hsl(43, 59%, 88%);
     width: 150px;
     left:10px;
-    top: 500px;
+    top: 530px;
     font-size: 12px;
     text-align: center;
   }

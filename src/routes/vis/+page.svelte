@@ -548,7 +548,7 @@ footer p span {
 <p style="position: absolute; top: 200px; left: 790px; font-size: 16px; max-width: 300px;">
   Try to rotate the map by mouse or place the mouse over the country you like. What do you see?
 </p>
-<p style="position: absolute; top: 500px; left: 950px; font-size: 16px; max-width: 180px;">
+<p style="position: absolute; top: 450px; left: 950px; font-size: 16px; max-width: 180px;">
   Fun fact: Do you know that there are more introverts than extroverts in America according to MBTI? (We know it's a surprise!)
 </p>
 </div>
@@ -605,7 +605,7 @@ footer p span {
   </div>
 </div>
 <div class="learn" style="position: absolute; top: 650px; right: 20px;">
-  <img src="{base}/page3/capybara.webp" alt="Capybara" style="width: 200px; height: auto; margin-right: 50px;">
+  <img src="{base}/page3/capybara.webp" alt="Capybara" style="width: 200px; height: auto; margin-right: 50px">
   <button on:click={() => goto(`${base}/quiz`)}>Ready for a quiz?</button>
 </div>
 <footer>
