@@ -1,6 +1,6 @@
 <script>
-    import { onMount } from 'svelte';
-    let base = '';
+    import { onMount, onDestroy } from 'svelte';
+    import { base } from '$app/paths';
     onMount(() => {
     document.body.style.backgroundImage = `url(${base}/page2/bg.jpg)`;
   });
