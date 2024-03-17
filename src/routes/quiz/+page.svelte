@@ -313,8 +313,8 @@ p {
 }
 
 .side-button {
-  position: fixed; /* Fixed positioning relative to the viewport */
-  top: 80%; /* Center vertically */
+  position: absolute; /* Fixed positioning relative to the viewport */
+  top: 95%; /* Center vertically */
   right: 50px; /* Align to the right side */
   transform: translateY(-50%); /* Center relative to its height */
   z-index: 1000; /* Ensure it's above other content */
@@ -380,10 +380,11 @@ p {
       <a href="https://www.16personalities.com/free-personality-test" target="_blank" class="external-link-button">Test your own MBTI!</a>
     </div>
   </div>
+  <div class="button-container">
+    <button on:click={() => goto(`${base}/conclution`)} class="side-button">Credits & Takeaways</button>
+  </div>
 {/if}
-<div class="button-container">
-  <button on:click={() => goto(`${base}/conclution`)} class="side-button">END!</button>
-</div>
+
 
 
 

@@ -598,7 +598,7 @@ footer a:hover {
 
 
 
-<button class="deep-dive-button" on:click={() => goto(`${base}/vis`)}>America-bala needs help!</button>
+<button class="deep-dive-button" on:click={() => goto(`${base}/vis`)}>America-bara needs help!</button>
 
 
 

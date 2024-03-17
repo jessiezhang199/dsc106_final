@@ -30,7 +30,7 @@
   <a href="/" on:click|preventDefault={() => goto(`${base}/16picture`)}>16 Personalities-16 Styles</a>
   <a href="/" on:click|preventDefault={() => goto(`${base}/vis`)}>MBTI across the World</a>
   <a href="/" on:click|preventDefault={() => goto(`${base}/quiz`)}>Fun Quiz</a>
-  <a href="/" on:click|preventDefault={() => goto(`${base}/conclution`)}>Credits</a>
+  <a href="/" on:click|preventDefault={() => goto(`${base}/conclution`)}>Credits & Takeaways</a>
 </nav>
 
 <slot />

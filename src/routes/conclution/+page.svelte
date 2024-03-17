@@ -4,6 +4,12 @@
     onMount(() => {
     document.body.style.backgroundImage = `url(${base}/page2/bg.jpg)`;
   });
+  onDestroy(() => {
+    // Cleanup that also needs to run in the browser
+    if (typeof document !== 'undefined') {
+      document.body.style.backgroundImage = '';
+    }
+    });
 </script>
 
 <style>
